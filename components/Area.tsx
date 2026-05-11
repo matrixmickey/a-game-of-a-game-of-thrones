@@ -10,6 +10,12 @@ export default function Area({top, left, width, height} : {top: number, left: nu
                 ev.preventDefault();
                 (ev.target as HTMLDivElement).appendChild(document.getElementById(ev.dataTransfer.getData('text')) as HTMLImageElement)
             }}
+            onClick={ev => {
+                const token = document.getElementsByClassName('selected').item(0);
+                if (!token) return;
+                (ev.target as HTMLDivElement).appendChild(token);
+                token.classList.remove('selected');
+            }}
         />
     )
 }

@@ -34,3 +34,7 @@ body {
   background-color: blue;
   opacity: 50%;
 }
+
+.token.selected {
+  border: 5px solid green;
+}
