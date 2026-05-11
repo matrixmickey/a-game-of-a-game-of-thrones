@@ -20,7 +20,25 @@ export default async function Home() {
       <Area top={95} left={15} width={20} height={5} />
     </div>
     <div>
-      {session ? <Token id="raid-1" src="/images/Raid.png" /> : "Log in to play"}
+      {session ? 
+      <>
+      <Token id="raid-special" src="/images/tokens/orders/RaidSpecial.png" />
+      <Token id="raid-1" src="/images/tokens/orders/Raid.png" />
+      <Token id="raid-2" src="/images/tokens/orders/Raid.png" />
+      <Token id="march-special" src="/images/tokens/orders/MarchSpecial.png" />
+      <Token id="march" src="/images/tokens/orders/March.png" />
+      <Token id="march-minus-one" src="/images/tokens/orders/MarchMinusOne.png" />
+      <Token id="defense-special" src="/images/tokens/orders/DefenseSpecial.png" />
+      <Token id="defense-1" src="/images/tokens/orders/Defense.png" />
+      <Token id="defense-2" src="/images/tokens/orders/Defense.png" />
+      <Token id="support-special" src="/images/tokens/orders/SupportSpecial.png" />
+      <Token id="support-1" src="/images/tokens/orders/Support.png" />
+      <Token id="support-2" src="/images/tokens/orders/Support.png" />
+      <Token id="consolidate-power-special" src="/images/tokens/orders/ConsolidatePowerSpecial.png" />
+      <Token id="consolidate-power-1" src="/images/tokens/orders/ConsolidatePower.png" />
+      <Token id="consolidate-power-2" src="/images/tokens/orders/ConsolidatePower.png" />
+      </>
+      : "Log in to play"}
     </div>
     </>
   );

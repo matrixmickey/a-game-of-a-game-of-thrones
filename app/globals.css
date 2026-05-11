@@ -35,6 +35,12 @@ body {
   opacity: 50%;
 }
 
+.token {
+  display: inline;
+  width: 3vw;
+  height: auto;
+}
+
 .token.selected {
   border: 5px solid green;
 }
