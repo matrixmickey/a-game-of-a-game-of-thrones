@@ -24,3 +24,13 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.board-container {
+  position: relative;
+}
+
+.area {
+  position: absolute;
+  background-color: blue;
+  opacity: 50%;
+}
