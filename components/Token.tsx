@@ -9,8 +9,9 @@ export default function Token({id, src}: {id: string, src: string}) {
             id={`${id}-token`}
             src={src}
             alt={`${id} token`}
-            width={64}
-            height={64}
+            width={0}
+            height={0}
+            sizes="3vw"
             onDragStart={ev => ev.dataTransfer.setData('text', (ev.target as HTMLImageElement).id)}
             onClick={ev => {
                 ev.stopPropagation();
