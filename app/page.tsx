@@ -1,4 +1,5 @@
 import Area from "@/components/Area";
+import Token from "@/components/Token";
 import { auth0 } from "@/lib/auth0";
 import Image from "next/image";
 
@@ -19,7 +20,7 @@ export default async function Home() {
       <Area top={95} left={15} width={20} height={5} />
     </div>
     <div>
-      {session ? `Welcome ${session.user.name}` : "Log in to play"}
+      {session ? <Token id="raid-1" src="/images/Raid.png" /> : "Log in to play"}
     </div>
     </>
   );
