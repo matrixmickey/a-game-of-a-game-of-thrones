@@ -1,10 +1,25 @@
 import Area from "@/components/Area";
 import Token from "@/components/Token";
 import { auth0 } from "@/lib/auth0";
+import { BigQuery } from "@google-cloud/bigquery";
 import Image from "next/image";
 
 export default async function Home() {
   const session = await auth0.getSession();
+
+  const bigquery = new BigQuery();
+
+  let [rows] = await bigquery.query('SELECT * FROM `a-game-of-a-game-of-thrones.dataset.house-pieces` LIMIT 1000');
+
+  if (rows.length === 0) {
+    await bigquery.query(`INSERT INTO \`a-game-of-a-game-of-thrones.dataset.house-pieces\` (house, type, area) VALUES
+      ('Lannister', 'footman', 'Stoney Sept'),
+      ('Lannister', 'footman', 'Lannisport'),
+      ('Lannister', 'knight', 'Lannisport'),
+      ('Lannister', 'ship', 'The Golden Sound');
+    `);
+    [rows] = await bigquery.query('SELECT * FROM `a-game-of-a-game-of-thrones.dataset.house-pieces` LIMIT 1000');
+  }
 
   return (
     <>
@@ -40,6 +55,7 @@ export default async function Home() {
       </>
       : "Log in to play"}
     </div>
+    <div>Rows returned from query: {rows.length}</div>
     </>
   );
 }
