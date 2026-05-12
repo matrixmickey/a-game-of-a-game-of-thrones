@@ -1,6 +1,9 @@
 "use client";
 
-export default function Area({top, left, width, height} : {top: number, left: number, width: number, height: number}) {
+import { HousePiece } from "@/types/HousePiece";
+import HousePieceImage from "./HousePieceImage";
+
+export default function Area({top, left, width, height, housePieces} : {top: number, left: number, width: number, height: number, housePieces: HousePiece[]}) {
     return (
         <div
             className="area"
@@ -16,6 +19,10 @@ export default function Area({top, left, width, height} : {top: number, left: nu
                 (ev.target as HTMLDivElement).appendChild(token);
                 token.classList.remove('selected');
             }}
-        />
+        >
+            {housePieces.map((housePiece, index) => (
+                <HousePieceImage key={index} id={`house-piece-top-${top}-left-${left}-index-${index}`} src={`/images/house-pieces/units/${housePiece.type}-${housePiece.house}.png`} />
+            ))}
+        </div>
     )
 }
