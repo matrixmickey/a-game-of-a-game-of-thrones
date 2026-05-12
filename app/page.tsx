@@ -37,21 +37,21 @@ export default async function Home() {
     <div>
       {session ? 
       <>
-      <Token id="raid-special" src="/images/tokens/orders/RaidSpecial.png" />
-      <Token id="raid-1" src="/images/tokens/orders/Raid.png" />
-      <Token id="raid-2" src="/images/tokens/orders/Raid.png" />
-      <Token id="march-special" src="/images/tokens/orders/MarchSpecial.png" />
-      <Token id="march" src="/images/tokens/orders/March.png" />
-      <Token id="march-minus-one" src="/images/tokens/orders/MarchMinusOne.png" />
-      <Token id="defense-special" src="/images/tokens/orders/DefenseSpecial.png" />
-      <Token id="defense-1" src="/images/tokens/orders/Defense.png" />
-      <Token id="defense-2" src="/images/tokens/orders/Defense.png" />
-      <Token id="support-special" src="/images/tokens/orders/SupportSpecial.png" />
-      <Token id="support-1" src="/images/tokens/orders/Support.png" />
-      <Token id="support-2" src="/images/tokens/orders/Support.png" />
-      <Token id="consolidate-power-special" src="/images/tokens/orders/ConsolidatePowerSpecial.png" />
-      <Token id="consolidate-power-1" src="/images/tokens/orders/ConsolidatePower.png" />
-      <Token id="consolidate-power-2" src="/images/tokens/orders/ConsolidatePower.png" />
+      <Token id="raid-special" src="/images/house-pieces/order-tokens/RaidSpecial.png" />
+      <Token id="raid-1" src="/images/house-pieces/order-tokens/Raid.png" />
+      <Token id="raid-2" src="/images/house-pieces/order-tokens/Raid.png" />
+      <Token id="march-special" src="/images/house-pieces/order-tokens/MarchSpecial.png" />
+      <Token id="march" src="/images/house-pieces/order-tokens/March.png" />
+      <Token id="march-minus-one" src="/images/house-pieces/order-tokens/MarchMinusOne.png" />
+      <Token id="defense-special" src="/images/house-pieces/order-tokens/DefenseSpecial.png" />
+      <Token id="defense-1" src="/images/house-pieces/order-tokens/Defense.png" />
+      <Token id="defense-2" src="/images/house-pieces/order-tokens/Defense.png" />
+      <Token id="support-special" src="/images/house-pieces/order-tokens/SupportSpecial.png" />
+      <Token id="support-1" src="/images/house-pieces/order-tokens/Support.png" />
+      <Token id="support-2" src="/images/house-pieces/order-tokens/Support.png" />
+      <Token id="consolidate-power-special" src="/images/house-pieces/order-tokens/ConsolidatePowerSpecial.png" />
+      <Token id="consolidate-power-1" src="/images/house-pieces/order-tokens/ConsolidatePower.png" />
+      <Token id="consolidate-power-2" src="/images/house-pieces/order-tokens/ConsolidatePower.png" />
       </>
       : "Log in to play"}
     </div>
