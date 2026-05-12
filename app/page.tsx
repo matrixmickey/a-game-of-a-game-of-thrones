@@ -1,5 +1,5 @@
 import Area from "@/components/Area";
-import Token from "@/components/Token";
+import HousePiece from "@/components/HousePiece";
 import { auth0 } from "@/lib/auth0";
 import { BigQuery } from "@google-cloud/bigquery";
 import Image from "next/image";
@@ -37,21 +37,21 @@ export default async function Home() {
     <div>
       {session ? 
       <>
-      <Token id="raid-special" src="/images/house-pieces/order-tokens/RaidSpecial.png" />
-      <Token id="raid-1" src="/images/house-pieces/order-tokens/Raid.png" />
-      <Token id="raid-2" src="/images/house-pieces/order-tokens/Raid.png" />
-      <Token id="march-special" src="/images/house-pieces/order-tokens/MarchSpecial.png" />
-      <Token id="march" src="/images/house-pieces/order-tokens/March.png" />
-      <Token id="march-minus-one" src="/images/house-pieces/order-tokens/MarchMinusOne.png" />
-      <Token id="defense-special" src="/images/house-pieces/order-tokens/DefenseSpecial.png" />
-      <Token id="defense-1" src="/images/house-pieces/order-tokens/Defense.png" />
-      <Token id="defense-2" src="/images/house-pieces/order-tokens/Defense.png" />
-      <Token id="support-special" src="/images/house-pieces/order-tokens/SupportSpecial.png" />
-      <Token id="support-1" src="/images/house-pieces/order-tokens/Support.png" />
-      <Token id="support-2" src="/images/house-pieces/order-tokens/Support.png" />
-      <Token id="consolidate-power-special" src="/images/house-pieces/order-tokens/ConsolidatePowerSpecial.png" />
-      <Token id="consolidate-power-1" src="/images/house-pieces/order-tokens/ConsolidatePower.png" />
-      <Token id="consolidate-power-2" src="/images/house-pieces/order-tokens/ConsolidatePower.png" />
+      <HousePiece id="raid-special" src="/images/house-pieces/order-tokens/RaidSpecial.png" />
+      <HousePiece id="raid-1" src="/images/house-pieces/order-tokens/Raid.png" />
+      <HousePiece id="raid-2" src="/images/house-pieces/order-tokens/Raid.png" />
+      <HousePiece id="march-special" src="/images/house-pieces/order-tokens/MarchSpecial.png" />
+      <HousePiece id="march" src="/images/house-pieces/order-tokens/March.png" />
+      <HousePiece id="march-minus-one" src="/images/house-pieces/order-tokens/MarchMinusOne.png" />
+      <HousePiece id="defense-special" src="/images/house-pieces/order-tokens/DefenseSpecial.png" />
+      <HousePiece id="defense-1" src="/images/house-pieces/order-tokens/Defense.png" />
+      <HousePiece id="defense-2" src="/images/house-pieces/order-tokens/Defense.png" />
+      <HousePiece id="support-special" src="/images/house-pieces/order-tokens/SupportSpecial.png" />
+      <HousePiece id="support-1" src="/images/house-pieces/order-tokens/Support.png" />
+      <HousePiece id="support-2" src="/images/house-pieces/order-tokens/Support.png" />
+      <HousePiece id="consolidate-power-special" src="/images/house-pieces/order-tokens/ConsolidatePowerSpecial.png" />
+      <HousePiece id="consolidate-power-1" src="/images/house-pieces/order-tokens/ConsolidatePower.png" />
+      <HousePiece id="consolidate-power-2" src="/images/house-pieces/order-tokens/ConsolidatePower.png" />
       </>
       : "Log in to play"}
     </div>

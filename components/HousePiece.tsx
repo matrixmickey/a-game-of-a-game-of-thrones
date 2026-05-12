@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 
-export default function Token({id, src}: {id: string, src: string}) {
+export default function HousePiece({id, src}: {id: string, src: string}) {
     return (
         <Image
             className="token"
