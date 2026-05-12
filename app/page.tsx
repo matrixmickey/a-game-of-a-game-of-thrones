@@ -12,9 +12,12 @@ export default async function Home() {
     "use server";
 
     await new BigQuery().query(`
+      DECLARE isFirstPlayer BOOL;
+      SET isFirstPlayer = (SELECT row_count = 0 AS result FROM \`a-game-of-a-game-of-thrones.dataset.__TABLES__\` WHERE table_id = 'players');
+
       INSERT INTO \`a-game-of-a-game-of-thrones.dataset.players\` (email, house)
       WITH PossibleValues AS (
-        SELECT ['Baratheon', 'Lannister', 'Stark'] AS options
+        SELECT ['Stark', 'Greyjoy', 'Lannister', 'Martell', 'Tyrell', 'Baratheon'] AS options
       ),
       AvailableValues AS (
         SELECT val
@@ -26,6 +29,39 @@ export default async function Home() {
       FROM AvailableValues
       ORDER BY RAND() -- Randomize order
       LIMIT 1;
+
+      IF isFirstPlayer THEN
+        TRUNCATE TABLE \`a-game-of-a-game-of-thrones.dataset.house-pieces\`;
+
+        INSERT INTO \`a-game-of-a-game-of-thrones.dataset.house-pieces\` (house, type, area) VALUES
+          ('Stark', 'footman', 'White Harbor'),
+          ('Stark', 'footman', 'Winterfell'),
+          ('Stark', 'knight', 'Winterfell'),
+          ('Stark', 'ship', 'The Shivering Sea'),
+          ('Greyjoy', 'footman', 'Greywater Watch'),
+          ('Greyjoy', 'footman', 'Pyke'),
+          ('Greyjoy', 'knight', 'Pyke'),
+          ('Greyjoy', 'ship', 'Port of Pyke'),
+          ('Greyjoy', 'ship', 'Ironmans Bay'),
+          ('Lannister', 'footman', 'Stoney Sept'),
+          ('Lannister', 'footman', 'Lannisport'),
+          ('Lannister', 'knight', 'Lannisport'),
+          ('Lannister', 'ship', 'The Golden Sound'),
+          ('Martell', 'footman', 'Salt Shore'),
+          ('Martell', 'footman', 'Sunspear'),
+          ('Martell', 'knight', 'Sunspear'),
+          ('Martell', 'ship', 'Sea Of Dorne'),
+          ('Tyrell', 'footman', 'Dornish Marches'),
+          ('Tyrell', 'footman', 'Highgarden'),
+          ('Tyrell', 'knight', 'Highgarden'),
+          ('Tyrell', 'ship', 'Redwyne Straights'),
+          ('Baratheon', 'footman', 'Kingswood'),
+          ('Baratheon', 'footman', 'Dragonstone'),
+          ('Baratheon', 'knight', 'Dragonstone'),
+          ('Baratheon', 'ship', 'Shipbreaker Bay'),
+          ('Baratheon', 'ship', 'Shipbreaker Bay');
+        
+      END IF;
     `);
     
     revalidatePath('/');
@@ -53,17 +89,7 @@ export default async function Home() {
     }
   }
 
-  let [housePieceRows] = await bigquery.query('SELECT * FROM `a-game-of-a-game-of-thrones.dataset.house-pieces` LIMIT 1000');
-
-  if (housePieceRows.length === 0) {
-    await bigquery.query(`INSERT INTO \`a-game-of-a-game-of-thrones.dataset.house-pieces\` (house, type, area) VALUES
-      ('Lannister', 'footman', 'Stoney Sept'),
-      ('Lannister', 'footman', 'Lannisport'),
-      ('Lannister', 'knight', 'Lannisport'),
-      ('Lannister', 'ship', 'The Golden Sound');
-    `);
-    [housePieceRows] = await bigquery.query('SELECT * FROM `a-game-of-a-game-of-thrones.dataset.house-pieces` LIMIT 1000');
-  }
+  const [housePieceRows] = await bigquery.query('SELECT * FROM `a-game-of-a-game-of-thrones.dataset.house-pieces` LIMIT 1000');
 
   const housePieces = housePieceRows as HousePiece[];
 
