@@ -11,6 +11,8 @@ export default async function Home() {
   async function joinGame() {
     "use server";
 
+    const email = (await auth0.getSession())?.user.email;
+
     await new BigQuery().query(`
       DECLARE isFirstPlayer BOOL;
       SET isFirstPlayer = (SELECT row_count = 0 AS result FROM \`a-game-of-a-game-of-thrones.dataset.__TABLES__\` WHERE table_id = 'players');
@@ -25,8 +27,11 @@ export default async function Home() {
         UNNEST(options) AS val
         WHERE val NOT IN (SELECT DISTINCT house FROM \`a-game-of-a-game-of-thrones.dataset.players\`)
       )
-      SELECT '${(await auth0.getSession())?.user.email}' AS email, val AS house
+      SELECT '${email}' AS email, val AS house
       FROM AvailableValues
+      WHERE NOT EXISTS (
+        SELECT 1 FROM \`a-game-of-a-game-of-thrones.dataset.players\` WHERE email = '${email}'
+      )
       ORDER BY RAND() -- Randomize order
       LIMIT 1;
 
