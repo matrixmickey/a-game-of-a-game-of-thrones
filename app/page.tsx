@@ -2,6 +2,7 @@ import joinGame from "@/actions/joinGame";
 import Area from "@/components/Area";
 import HousePieceImage from "@/components/HousePieceImage";
 import SubmitButton from "@/components/SubmitButton";
+import UnitsWithoutArea from "@/components/UnitsWithoutArea";
 import { auth0 } from "@/lib/auth0";
 import { HousePiece } from "@/types/HousePiece";
 import { Player } from "@/types/Player";
@@ -70,6 +71,12 @@ export default async function Home() {
         <HousePieceImage id="consolidate-power-special" src="/images/house-pieces/order-tokens/ConsolidatePowerSpecial.png" />
         <HousePieceImage id="consolidate-power-1" src="/images/house-pieces/order-tokens/ConsolidatePower.png" />
         <HousePieceImage id="consolidate-power-2" src="/images/house-pieces/order-tokens/ConsolidatePower.png" />
+      </div>
+      <div>
+        <UnitsWithoutArea type="footman" house={player.house} total={10} housePieces={housePieces} />
+        <UnitsWithoutArea type="knight" house={player.house} total={5} housePieces={housePieces} />
+        <UnitsWithoutArea type="ship" house={player.house} total={6} housePieces={housePieces} />
+        <UnitsWithoutArea type="siege-engine" house={player.house} total={2} housePieces={housePieces} />
       </div>
       </>
     }
