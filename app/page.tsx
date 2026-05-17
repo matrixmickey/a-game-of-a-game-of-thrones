@@ -51,6 +51,29 @@ export default async function Home() {
       <Area top={58} left={4} width={7} height={8} housePieces={housePieces.filter(housePiece => housePiece.area === "The Golden Sound")} />
       <Area top={54} left={17} width={7} height={10} housePieces={housePieces.filter(housePiece => housePiece.area === "Lannisport")} />
       <Area top={58} left={25} width={11} height={6} housePieces={housePieces.filter(housePiece => housePiece.area === "Stoney Sept")} />
+      <Area top={7} left={32} width={22} height={6} housePieces={housePieces.filter(housePiece => housePiece.area === "Castle Black")} />
+      <Area top={14} left={52} width={13} height={7} housePieces={housePieces.filter(housePiece => housePiece.area === "Karhold")} />
+      <Area top={15} left={17} width={7} height={5} housePieces={housePieces.filter(housePiece => housePiece.area === "Port of Winterfell")} />
+      <Area top={16} left={26} width={14} height={18} housePieces={housePieces.filter(housePiece => housePiece.area === "Winterfell")} />
+      <Area top={8} left={65} width={10} height={24} housePieces={housePieces.filter(housePiece => housePiece.area === "The Shivering Sea")} />
+      <Area top={22} left={10} width={16} height={14} housePieces={housePieces.filter(housePiece => housePiece.area === "The Stony Shore")} />
+      <Area top={24} left={41} width={9} height={11} housePieces={housePieces.filter(housePiece => housePiece.area === "White Harbor")} />
+      <Area top={26} left={50} width={10} height={7} housePieces={housePieces.filter(housePiece => housePiece.area === "Widows Watch")} />
+      <Area top={37} left={7} width={14} height={5} housePieces={housePieces.filter(housePiece => housePiece.area === "Flints Finger")} />
+      <Area top={36} left={21} width={9} height={7} housePieces={housePieces.filter(housePiece => housePiece.area === "Greywater Watch")} />
+      <Area top={34} left={30} width={11} height={10} housePieces={housePieces.filter(housePiece => housePiece.area === "Moat Cailin")} />
+      <Area top={35} left={43} width={6} height={4} housePieces={housePieces.filter(housePiece => housePiece.area === "Port of White Harbor")} />
+      <Area top={33} left={66} width={9} height={20} housePieces={housePieces.filter(housePiece => housePiece.area === "The Narrow Sea")} />
+      <Area top={42} left={4} width={5} height={15} housePieces={housePieces.filter(housePiece => housePiece.area === "Ironmans Bay")} />
+      <Area top={42} left={9} width={7} height={13} housePieces={housePieces.filter(housePiece => housePiece.area === "Pyke")} />
+      <Area top={44} left={16} width={6} height={5} housePieces={housePieces.filter(housePiece => housePiece.area === "Port of Pyke")} />
+      <Area top={44} left={24} width={10} height={7} housePieces={housePieces.filter(housePiece => housePiece.area === "Seagard")} />
+      <Area top={44} left={34} width={10} height={5} housePieces={housePieces.filter(housePiece => housePiece.area === "The Twins")} />
+      <Area top={41} left={44} width={12} height={7} housePieces={housePieces.filter(housePiece => housePiece.area === "The Fingers")} />
+      <Area top={56} left={11} width={6} height={6} housePieces={housePieces.filter(housePiece => housePiece.area === "Port of Lannisport")} />
+      <Area top={51} left={26} width={14} height={5} housePieces={housePieces.filter(housePiece => housePiece.area === "Riverrun")} />
+      <Area top={49} left={40} width={10} height={7} housePieces={housePieces.filter(housePiece => housePiece.area === "The Mountains Of The Moon")} />
+      <Area top={50} left={50} width={16} height={6} housePieces={housePieces.filter(housePiece => housePiece.area === "The Eyrie")} />
     </div>
     {player &&
       <>
