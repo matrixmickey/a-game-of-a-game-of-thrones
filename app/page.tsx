@@ -64,7 +64,7 @@ export default async function Home() {
       <Area top={34} left={30} width={11} height={10} housePieces={housePieces.filter(housePiece => housePiece.area === "Moat Cailin")} />
       <Area top={35} left={43} width={6} height={4} housePieces={housePieces.filter(housePiece => housePiece.area === "Port of White Harbor")} />
       <Area top={33} left={66} width={9} height={20} housePieces={housePieces.filter(housePiece => housePiece.area === "The Narrow Sea")} />
-      <Area top={42} left={4} width={5} height={15} housePieces={housePieces.filter(housePiece => housePiece.area === "Ironmans Bay")} />
+      <Area top={50} left={4} width={5} height={7} housePieces={housePieces.filter(housePiece => housePiece.area === "Ironmans Bay")} />
       <Area top={42} left={9} width={7} height={13} housePieces={housePieces.filter(housePiece => housePiece.area === "Pyke")} />
       <Area top={44} left={16} width={6} height={5} housePieces={housePieces.filter(housePiece => housePiece.area === "Port of Pyke")} />
       <Area top={44} left={24} width={10} height={7} housePieces={housePieces.filter(housePiece => housePiece.area === "Seagard")} />
