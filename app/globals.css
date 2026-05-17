@@ -31,8 +31,7 @@ body {
 
 .area {
   position: absolute;
-  background-color: blue;
-  opacity: 50%;
+  opacity: 80%;
 }
 
 .token {
