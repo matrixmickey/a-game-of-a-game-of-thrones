@@ -32,6 +32,9 @@ body {
 .area {
   position: absolute;
   opacity: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .token {
