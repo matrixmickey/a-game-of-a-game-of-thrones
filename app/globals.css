@@ -104,3 +104,41 @@ body {
 .kings-court-track {
   left: 93.5%;
 }
+
+.supply-track {
+  position: absolute;
+  left: 77%;
+  width: 11%;
+  height: 3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.supply-track.position-0 {
+  top: 61.5%;
+}
+
+.supply-track.position-1 {
+  top: 58.3%;
+}
+
+.supply-track.position-2 {
+  top: 55.1%;
+}
+
+.supply-track.position-3 {
+  top: 51.9%;
+}
+
+.supply-track.position-4 {
+  top: 48.7%;
+}
+
+.supply-track.position-5 {
+  top: 45.5%;
+}
+
+.supply-track.position-6 {
+  top: 42.3%;
+}
