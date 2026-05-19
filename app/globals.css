@@ -55,3 +55,12 @@ body {
 .wildling-threat-token.position-2 {
   left: 25%;
 }
+
+.game-round-marker {
+  position: absolute;
+  left: 82%;
+}
+
+.game-round-marker.position-1 {
+  top: 95%;
+}
