@@ -4,6 +4,7 @@ import HousePieceImage from "@/components/HousePieceImage";
 import SubmitButton from "@/components/SubmitButton";
 import UnitsWithoutArea from "@/components/UnitsWithoutArea";
 import { auth0 } from "@/lib/auth0";
+import { Game } from "@/types/Game";
 import { HousePiece } from "@/types/HousePiece";
 import { Player } from "@/types/Player";
 import { BigQuery } from "@google-cloud/bigquery";
@@ -32,6 +33,10 @@ export default async function Home() {
     }
   }
 
+  const [gameRows] = await bigquery.query('SELECT * FROM `a-game-of-a-game-of-thrones.dataset.games` LIMIT 1000');
+
+  const game = gameRows[0] as Game;
+
   const [housePieceRows] = await bigquery.query('SELECT * FROM `a-game-of-a-game-of-thrones.dataset.house-pieces` LIMIT 1000');
 
   const housePieces = housePieceRows as HousePiece[];
@@ -54,7 +59,7 @@ export default async function Home() {
         width={0}
         height={0}
         sizes="3vw"
-        className="token wildling-threat-token position-2"
+        className={`token wildling-threat-token position-${game.wildlingThreat}`}
         loading="eager"
       />
       <Area top={0} left={0} width={10} height={35} housePieces={housePieces.filter(housePiece => housePiece.area === "Bay Of Ice")} houseOfPlayer={houseOfPlayer} />

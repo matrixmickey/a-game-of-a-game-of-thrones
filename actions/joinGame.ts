@@ -9,7 +9,47 @@ export default async function joinGame() {
 
     await new BigQuery().query(`
         DECLARE isFirstPlayer BOOL;
-        SET isFirstPlayer = (SELECT row_count = 0 AS result FROM \`a-game-of-a-game-of-thrones.dataset.__TABLES__\` WHERE table_id = 'players');
+        SET isFirstPlayer = (SELECT row_count = 0 AS result FROM \`a-game-of-a-game-of-thrones.dataset.__TABLES__\` WHERE table_id = 'games');
+
+        IF isFirstPlayer THEN
+
+            INSERT INTO \`a-game-of-a-game-of-thrones.dataset.games\` (wildlingThreat, round, phase) VALUES (2, 1, 'Planning');
+
+            TRUNCATE TABLE \`a-game-of-a-game-of-thrones.dataset.house-pieces\`;
+
+            INSERT INTO \`a-game-of-a-game-of-thrones.dataset.house-pieces\` (house, type, area) VALUES
+                ('neutral', '6', 'The Eyrie'),
+                ('neutral', '5', 'Kings Landing'),
+                ('Stark', 'footman', 'White Harbor'),
+                ('Stark', 'footman', 'Winterfell'),
+                ('Stark', 'knight', 'Winterfell'),
+                ('Stark', 'ship', 'The Shivering Sea'),
+                ('Greyjoy', 'footman', 'Greywater Watch'),
+                ('Greyjoy', 'footman', 'Pyke'),
+                ('Greyjoy', 'knight', 'Pyke'),
+                ('Greyjoy', 'ship', 'Port of Pyke'),
+                ('Greyjoy', 'ship', 'Ironmans Bay'),
+                ('Lannister', 'footman', 'Stoney Sept'),
+                ('Lannister', 'footman', 'Lannisport'),
+                ('Lannister', 'knight', 'Lannisport'),
+                ('Lannister', 'ship', 'The Golden Sound'),
+                ('Martell', 'footman', 'Salt Shore'),
+                ('Martell', 'footman', 'Sunspear'),
+                ('Martell', 'knight', 'Sunspear'),
+                ('Martell', 'ship', 'Sea Of Dorne'),
+                ('Tyrell', 'footman', 'Dornish Marches'),
+                ('Tyrell', 'footman', 'Highgarden'),
+                ('Tyrell', 'knight', 'Highgarden'),
+                ('Tyrell', 'ship', 'Redwyne Straights'),
+                ('Baratheon', 'footman', 'Kingswood'),
+                ('Baratheon', 'footman', 'Dragonstone'),
+                ('Baratheon', 'knight', 'Dragonstone'),
+                ('Baratheon', 'ship', 'Shipbreaker Bay'),
+                ('Baratheon', 'ship', 'Shipbreaker Bay');
+
+            TRUNCATE TABLE \`a-game-of-a-game-of-thrones.dataset.players\`;
+        
+        END IF;
 
         INSERT INTO \`a-game-of-a-game-of-thrones.dataset.players\` (email, house)
         WITH PossibleValues AS (
@@ -28,41 +68,6 @@ export default async function joinGame() {
         )
         ORDER BY RAND() -- Randomize order
         LIMIT 1;
-
-        IF isFirstPlayer THEN
-        TRUNCATE TABLE \`a-game-of-a-game-of-thrones.dataset.house-pieces\`;
-
-        INSERT INTO \`a-game-of-a-game-of-thrones.dataset.house-pieces\` (house, type, area) VALUES
-            ('neutral', '6', 'The Eyrie'),
-            ('neutral', '5', 'Kings Landing'),
-            ('Stark', 'footman', 'White Harbor'),
-            ('Stark', 'footman', 'Winterfell'),
-            ('Stark', 'knight', 'Winterfell'),
-            ('Stark', 'ship', 'The Shivering Sea'),
-            ('Greyjoy', 'footman', 'Greywater Watch'),
-            ('Greyjoy', 'footman', 'Pyke'),
-            ('Greyjoy', 'knight', 'Pyke'),
-            ('Greyjoy', 'ship', 'Port of Pyke'),
-            ('Greyjoy', 'ship', 'Ironmans Bay'),
-            ('Lannister', 'footman', 'Stoney Sept'),
-            ('Lannister', 'footman', 'Lannisport'),
-            ('Lannister', 'knight', 'Lannisport'),
-            ('Lannister', 'ship', 'The Golden Sound'),
-            ('Martell', 'footman', 'Salt Shore'),
-            ('Martell', 'footman', 'Sunspear'),
-            ('Martell', 'knight', 'Sunspear'),
-            ('Martell', 'ship', 'Sea Of Dorne'),
-            ('Tyrell', 'footman', 'Dornish Marches'),
-            ('Tyrell', 'footman', 'Highgarden'),
-            ('Tyrell', 'knight', 'Highgarden'),
-            ('Tyrell', 'ship', 'Redwyne Straights'),
-            ('Baratheon', 'footman', 'Kingswood'),
-            ('Baratheon', 'footman', 'Dragonstone'),
-            ('Baratheon', 'knight', 'Dragonstone'),
-            ('Baratheon', 'ship', 'Shipbreaker Bay'),
-            ('Baratheon', 'ship', 'Shipbreaker Bay');
-        
-        END IF;
     `);
     
     revalidatePath('/');
