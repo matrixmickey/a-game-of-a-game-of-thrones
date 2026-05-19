@@ -3,7 +3,7 @@
 import { HousePiece } from "@/types/HousePiece";
 import HousePieceImage from "./HousePieceImage";
 
-export default function Area({top, left, width, height, housePieces} : {top: number, left: number, width: number, height: number, housePieces: HousePiece[]}) {
+export default function Area({top, left, width, height, housePieces, houseOfPlayer} : {top: number, left: number, width: number, height: number, housePieces: HousePiece[], houseOfPlayer: string | undefined}) {
     return (
         <div
             className="area"
@@ -21,7 +21,7 @@ export default function Area({top, left, width, height, housePieces} : {top: num
             }}
         >
             {housePieces.map((housePiece, index) => (
-                <HousePieceImage key={index} id={`house-piece-top-${top}-left-${left}-index-${index}`} src={`/images/house-pieces/units/${housePiece.type}-${housePiece.house}.png`} isMovable={housePiece.house !== 'neutral'} />
+                <HousePieceImage key={index} id={`house-piece-top-${top}-left-${left}-index-${index}`} src={`/images/house-pieces/units/${housePiece.type}-${housePiece.house}.png`} isMovable={housePiece.house === houseOfPlayer} />
             ))}
         </div>
     )
