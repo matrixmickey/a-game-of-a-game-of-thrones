@@ -45,6 +45,14 @@ export default async function Home() {
         width={1980}
         height={2975}
       />
+      <Image
+        src="/images/wildling-threat-token.png"
+        alt="WTT"
+        width={0}
+        height={0}
+        sizes="3vw"
+        className="token wildling-threat-token position-2"
+      />
       <Area top={0} left={0} width={10} height={35} housePieces={housePieces.filter(housePiece => housePiece.area === "Bay Of Ice")} />
       <Area top={37} left={0} width={3} height={32} housePieces={housePieces.filter(housePiece => housePiece.area === "Sunset Sea")} />
       <Area top={95} left={15} width={20} height={5} housePieces={housePieces.filter(housePiece => housePiece.area === "West Summer Sea")} />

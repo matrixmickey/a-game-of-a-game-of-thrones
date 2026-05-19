@@ -46,3 +46,12 @@ body {
 .token.selected {
   border: 5px solid green;
 }
+
+.wildling-threat-token {
+  position: absolute;
+  top: 3.5%;
+}
+
+.wildling-threat-token.position-2 {
+  left: 25%;
+}
