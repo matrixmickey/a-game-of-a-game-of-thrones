@@ -20,6 +20,7 @@ export default function HousePieceImage({id, src}: {id: string, src: string}) {
                 }
                 (ev.target as HTMLImageElement).classList.add('selected');
             }}
+            loading="eager"
         />
     )
 }

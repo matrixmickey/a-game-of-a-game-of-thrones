@@ -44,6 +44,7 @@ export default async function Home() {
         alt="The game board should be displaying here..."
         width={1980}
         height={2975}
+        loading="eager"
       />
       <Image
         src="/images/wildling-threat-token.png"
@@ -52,6 +53,7 @@ export default async function Home() {
         height={0}
         sizes="3vw"
         className="token wildling-threat-token position-2"
+        loading="eager"
       />
       <Area top={0} left={0} width={10} height={35} housePieces={housePieces.filter(housePiece => housePiece.area === "Bay Of Ice")} />
       <Area top={37} left={0} width={3} height={32} housePieces={housePieces.filter(housePiece => housePiece.area === "Sunset Sea")} />
