@@ -33,6 +33,8 @@ export default async function joinGame() {
         TRUNCATE TABLE \`a-game-of-a-game-of-thrones.dataset.house-pieces\`;
 
         INSERT INTO \`a-game-of-a-game-of-thrones.dataset.house-pieces\` (house, type, area) VALUES
+            ('neutral', '6', 'The Eyrie'),
+            ('neutral', '5', 'Kings Landing'),
             ('Stark', 'footman', 'White Harbor'),
             ('Stark', 'footman', 'Winterfell'),
             ('Stark', 'knight', 'Winterfell'),

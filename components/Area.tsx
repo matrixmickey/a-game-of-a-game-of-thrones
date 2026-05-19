@@ -11,17 +11,17 @@ export default function Area({top, left, width, height, housePieces} : {top: num
             onDragOver={ev => ev.preventDefault()}
             onDrop={ev => {
                 ev.preventDefault();
-                (ev.target as HTMLDivElement).appendChild(document.getElementById(ev.dataTransfer.getData('text')) as HTMLImageElement)
+                (ev.currentTarget as HTMLDivElement).appendChild(document.getElementById(ev.dataTransfer.getData('text')) as HTMLImageElement)
             }}
             onClick={ev => {
                 const token = document.getElementsByClassName('selected').item(0);
                 if (!token) return;
-                (ev.target as HTMLDivElement).appendChild(token);
+                (ev.currentTarget as HTMLDivElement).appendChild(token);
                 token.classList.remove('selected');
             }}
         >
             {housePieces.map((housePiece, index) => (
-                <HousePieceImage key={index} id={`house-piece-top-${top}-left-${left}-index-${index}`} src={`/images/house-pieces/units/${housePiece.type}-${housePiece.house}.png`} />
+                <HousePieceImage key={index} id={`house-piece-top-${top}-left-${left}-index-${index}`} src={`/images/house-pieces/units/${housePiece.type}-${housePiece.house}.png`} isMovable={housePiece.house !== 'neutral'} />
             ))}
         </div>
     )

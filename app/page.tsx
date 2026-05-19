@@ -125,21 +125,21 @@ export default async function Home() {
       </div>
       <div>Place your Order Tokens:</div>
       <div>
-        <HousePieceImage id="raid-special" src="/images/house-pieces/order-tokens/RaidSpecial.png" />
-        <HousePieceImage id="raid-1" src="/images/house-pieces/order-tokens/Raid.png" />
-        <HousePieceImage id="raid-2" src="/images/house-pieces/order-tokens/Raid.png" />
-        <HousePieceImage id="march-special" src="/images/house-pieces/order-tokens/MarchSpecial.png" />
-        <HousePieceImage id="march" src="/images/house-pieces/order-tokens/March.png" />
-        <HousePieceImage id="march-minus-one" src="/images/house-pieces/order-tokens/MarchMinusOne.png" />
-        <HousePieceImage id="defense-special" src="/images/house-pieces/order-tokens/DefenseSpecial.png" />
-        <HousePieceImage id="defense-1" src="/images/house-pieces/order-tokens/Defense.png" />
-        <HousePieceImage id="defense-2" src="/images/house-pieces/order-tokens/Defense.png" />
-        <HousePieceImage id="support-special" src="/images/house-pieces/order-tokens/SupportSpecial.png" />
-        <HousePieceImage id="support-1" src="/images/house-pieces/order-tokens/Support.png" />
-        <HousePieceImage id="support-2" src="/images/house-pieces/order-tokens/Support.png" />
-        <HousePieceImage id="consolidate-power-special" src="/images/house-pieces/order-tokens/ConsolidatePowerSpecial.png" />
-        <HousePieceImage id="consolidate-power-1" src="/images/house-pieces/order-tokens/ConsolidatePower.png" />
-        <HousePieceImage id="consolidate-power-2" src="/images/house-pieces/order-tokens/ConsolidatePower.png" />
+        <HousePieceImage id="raid-special" src="/images/house-pieces/order-tokens/RaidSpecial.png" isMovable={true} />
+        <HousePieceImage id="raid-1" src="/images/house-pieces/order-tokens/Raid.png" isMovable={true} />
+        <HousePieceImage id="raid-2" src="/images/house-pieces/order-tokens/Raid.png" isMovable={true} />
+        <HousePieceImage id="march-special" src="/images/house-pieces/order-tokens/MarchSpecial.png" isMovable={true} />
+        <HousePieceImage id="march" src="/images/house-pieces/order-tokens/March.png" isMovable={true} />
+        <HousePieceImage id="march-minus-one" src="/images/house-pieces/order-tokens/MarchMinusOne.png" isMovable={true} />
+        <HousePieceImage id="defense-special" src="/images/house-pieces/order-tokens/DefenseSpecial.png" isMovable={true} />
+        <HousePieceImage id="defense-1" src="/images/house-pieces/order-tokens/Defense.png" isMovable={true} />
+        <HousePieceImage id="defense-2" src="/images/house-pieces/order-tokens/Defense.png" isMovable={true} />
+        <HousePieceImage id="support-special" src="/images/house-pieces/order-tokens/SupportSpecial.png" isMovable={true} />
+        <HousePieceImage id="support-1" src="/images/house-pieces/order-tokens/Support.png" isMovable={true} />
+        <HousePieceImage id="support-2" src="/images/house-pieces/order-tokens/Support.png" isMovable={true} />
+        <HousePieceImage id="consolidate-power-special" src="/images/house-pieces/order-tokens/ConsolidatePowerSpecial.png" isMovable={true} />
+        <HousePieceImage id="consolidate-power-1" src="/images/house-pieces/order-tokens/ConsolidatePower.png" isMovable={true} />
+        <HousePieceImage id="consolidate-power-2" src="/images/house-pieces/order-tokens/ConsolidatePower.png" isMovable={true} />
       </div>
       </>
     }
