@@ -64,3 +64,43 @@ body {
 .game-round-marker.position-1 {
   top: 95%;
 }
+
+.influence-token {
+  position: absolute;
+}
+
+.influence-token.position-1 {
+  top: 29%;
+}
+
+.influence-token.position-2 {
+  top: 24%;
+}
+
+.influence-token.position-3 {
+  top: 19%;
+}
+
+.influence-token.position-4 {
+  top: 14%;
+}
+
+.influence-token.position-5 {
+  top: 9%;
+}
+
+.influence-token.position-6 {
+  top: 4%;
+}
+
+.iron-throne-track {
+  left: 78.5%;
+}
+
+.fiefdoms-track {
+  left: 86%;
+}
+
+.kings-court-track {
+  left: 93.5%;
+}

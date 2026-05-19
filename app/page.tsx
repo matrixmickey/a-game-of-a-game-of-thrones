@@ -71,6 +71,37 @@ export default async function Home() {
         className={`token game-round-marker position-${game.round}`}
         loading="eager"
       />
+      {players.map((player, index) => (
+        <div key={index}>
+          <Image
+            src={`/images/influence-tokens/${player.house}.png`}
+            alt={`${player.house}`}
+            width={0}
+            height={0}
+            sizes="3vw"
+            className={`token influence-token iron-throne-track position-${player.ironThroneTrack}`}
+            loading="eager"
+          />
+          <Image
+            src={`/images/influence-tokens/${player.house}.png`}
+            alt={`${player.house}`}
+            width={0}
+            height={0}
+            sizes="3vw"
+            className={`token influence-token fiefdoms-track position-${player.fiefdomsTrack}`}
+            loading="eager"
+          />
+          <Image
+            src={`/images/influence-tokens/${player.house}.png`}
+            alt={`${player.house}`}
+            width={0}
+            height={0}
+            sizes="3vw"
+            className={`token influence-token kings-court-track position-${player.kingsCourtTrack}`}
+            loading="eager"
+          />
+        </div>
+      ))}
       <Area top={0} left={0} width={10} height={35} housePieces={housePieces.filter(housePiece => housePiece.area === "Bay Of Ice")} houseOfPlayer={houseOfPlayer} />
       <Area top={37} left={0} width={3} height={32} housePieces={housePieces.filter(housePiece => housePiece.area === "Sunset Sea")} houseOfPlayer={houseOfPlayer} />
       <Area top={95} left={15} width={20} height={5} housePieces={housePieces.filter(housePiece => housePiece.area === "West Summer Sea")} houseOfPlayer={houseOfPlayer} />
