@@ -108,6 +108,13 @@ export default async function Home() {
       <>
       <div>You are House {player.house}</div>
       <div>
+        <UnitsWithoutArea type="footman" house={player.house} total={10} housePieces={housePieces} />
+        <UnitsWithoutArea type="knight" house={player.house} total={5} housePieces={housePieces} />
+        <UnitsWithoutArea type="ship" house={player.house} total={6} housePieces={housePieces} />
+        <UnitsWithoutArea type="siege-engine" house={player.house} total={2} housePieces={housePieces} />
+      </div>
+      <div>Place your Order Tokens:</div>
+      <div>
         <HousePieceImage id="raid-special" src="/images/house-pieces/order-tokens/RaidSpecial.png" />
         <HousePieceImage id="raid-1" src="/images/house-pieces/order-tokens/Raid.png" />
         <HousePieceImage id="raid-2" src="/images/house-pieces/order-tokens/Raid.png" />
@@ -123,12 +130,6 @@ export default async function Home() {
         <HousePieceImage id="consolidate-power-special" src="/images/house-pieces/order-tokens/ConsolidatePowerSpecial.png" />
         <HousePieceImage id="consolidate-power-1" src="/images/house-pieces/order-tokens/ConsolidatePower.png" />
         <HousePieceImage id="consolidate-power-2" src="/images/house-pieces/order-tokens/ConsolidatePower.png" />
-      </div>
-      <div>
-        <UnitsWithoutArea type="footman" house={player.house} total={10} housePieces={housePieces} />
-        <UnitsWithoutArea type="knight" house={player.house} total={5} housePieces={housePieces} />
-        <UnitsWithoutArea type="ship" house={player.house} total={6} housePieces={housePieces} />
-        <UnitsWithoutArea type="siege-engine" house={player.house} total={2} housePieces={housePieces} />
       </div>
       </>
     }
