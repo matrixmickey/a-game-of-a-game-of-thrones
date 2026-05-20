@@ -203,7 +203,7 @@ export default async function Home() {
         <MovablePiece id="consolidate-power-1" piece={<Piece src="/images/order-tokens/ConsolidatePower.png" alt="consolidate-power-1" />} />
         <MovablePiece id="consolidate-power-2" piece={<Piece src="/images/order-tokens/ConsolidatePower.png" alt="consolidate-power-2" />} />
       </div>
-      <div>These are your remaining Units:</div>
+      <div>These are your Available Units:</div>
       <div>
         <RemainingUnits type="footman" house={houseOfPlayer} total={10} housePieces={housePieces} />
         <RemainingUnits type="knight" house={houseOfPlayer} total={5} housePieces={housePieces} />
