@@ -178,7 +178,18 @@ export default async function Home() {
     </div>
     {houseOfPlayer &&
       <>
-      <div>You are House {houseOfPlayer}</div>
+      <div>
+        You are House {houseOfPlayer}:
+        <Image
+          src={`/images/influence-tokens/${houseOfPlayer}.png`}
+          alt={houseOfPlayer}
+          width={0}
+          height={0}
+          sizes="3vw"
+          className="token"
+        />
+      </div>
+      <div>These are your remaining Units:</div>
       <div>
         <UnitsWithoutArea type="footman" house={houseOfPlayer} total={10} housePieces={housePieces} />
         <UnitsWithoutArea type="knight" house={houseOfPlayer} total={5} housePieces={housePieces} />
