@@ -6,7 +6,7 @@ export default function RemainingUnits({type, house, total, housePieces}: {type:
     return Array.from({length: total - housePieces.filter(housePiece => housePiece.house === house && housePiece.type === type).length}, (_, index) => {
         const id = `unit-${type}-index-${index}`;
         return (
-            <MovablePiece key={index} piece={<Piece src={`/images/house-pieces/units/${type}-${house}.png`} alt={id} />} id={id} />
+            <MovablePiece key={index} piece={<Piece src={`/images/house-pieces/${type}-${house}.png`} alt={id} />} id={id} />
         );
     })
 }

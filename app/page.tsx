@@ -194,21 +194,21 @@ export default async function Home() {
       </div>
       <div>Place your Order Tokens:</div>
       <div>
-        <MovablePiece id="raid-special" piece={<Piece src="/images/house-pieces/order-tokens/RaidSpecial.png" alt="raid-special" />} />
-        <MovablePiece id="raid-1" piece={<Piece src="/images/house-pieces/order-tokens/Raid.png" alt="raid-1" />} />
-        <MovablePiece id="raid-2" piece={<Piece src="/images/house-pieces/order-tokens/Raid.png" alt="raid-2" />} />
-        <MovablePiece id="march-special" piece={<Piece src="/images/house-pieces/order-tokens/MarchSpecial.png" alt="march-special" />} />
-        <MovablePiece id="march" piece={<Piece src="/images/house-pieces/order-tokens/March.png" alt="march" />} />
-        <MovablePiece id="march-minus-one" piece={<Piece src="/images/house-pieces/order-tokens/MarchMinusOne.png" alt="march-minus-onel" />} />
-        <MovablePiece id="defense-special" piece={<Piece src="/images/house-pieces/order-tokens/DefenseSpecial.png" alt="defense-special" />} />
-        <MovablePiece id="defense-1" piece={<Piece src="/images/house-pieces/order-tokens/Defense.png" alt="defense-1" />} />
-        <MovablePiece id="defense-2" piece={<Piece src="/images/house-pieces/order-tokens/Defense.png" alt="defense-2" />} />
-        <MovablePiece id="support-special" piece={<Piece src="/images/house-pieces/order-tokens/SupportSpecial.png" alt="support-special" />} />
-        <MovablePiece id="support-1" piece={<Piece src="/images/house-pieces/order-tokens/Support.png" alt="support-1" />} />
-        <MovablePiece id="support-2" piece={<Piece src="/images/house-pieces/order-tokens/Support.png" alt="support-2" />} />
-        <MovablePiece id="consolidate-power-special" piece={<Piece src="/images/house-pieces/order-tokens/ConsolidatePowerSpecial.png" alt="consolidate-power-special" />} />
-        <MovablePiece id="consolidate-power-1" piece={<Piece src="/images/house-pieces/order-tokens/ConsolidatePower.png" alt="consolidate-power-1" />} />
-        <MovablePiece id="consolidate-power-2" piece={<Piece src="/images/house-pieces/order-tokens/ConsolidatePower.png" alt="consolidate-power-2" />} />
+        <MovablePiece id="raid-special" piece={<Piece src="/images/order-tokens/RaidSpecial.png" alt="raid-special" />} />
+        <MovablePiece id="raid-1" piece={<Piece src="/images/order-tokens/Raid.png" alt="raid-1" />} />
+        <MovablePiece id="raid-2" piece={<Piece src="/images/order-tokens/Raid.png" alt="raid-2" />} />
+        <MovablePiece id="march-special" piece={<Piece src="/images/order-tokens/MarchSpecial.png" alt="march-special" />} />
+        <MovablePiece id="march" piece={<Piece src="/images/order-tokens/March.png" alt="march" />} />
+        <MovablePiece id="march-minus-one" piece={<Piece src="/images/order-tokens/MarchMinusOne.png" alt="march-minus-onel" />} />
+        <MovablePiece id="defense-special" piece={<Piece src="/images/order-tokens/DefenseSpecial.png" alt="defense-special" />} />
+        <MovablePiece id="defense-1" piece={<Piece src="/images/order-tokens/Defense.png" alt="defense-1" />} />
+        <MovablePiece id="defense-2" piece={<Piece src="/images/order-tokens/Defense.png" alt="defense-2" />} />
+        <MovablePiece id="support-special" piece={<Piece src="/images/order-tokens/SupportSpecial.png" alt="support-special" />} />
+        <MovablePiece id="support-1" piece={<Piece src="/images/order-tokens/Support.png" alt="support-1" />} />
+        <MovablePiece id="support-2" piece={<Piece src="/images/order-tokens/Support.png" alt="support-2" />} />
+        <MovablePiece id="consolidate-power-special" piece={<Piece src="/images/order-tokens/ConsolidatePowerSpecial.png" alt="consolidate-power-special" />} />
+        <MovablePiece id="consolidate-power-1" piece={<Piece src="/images/order-tokens/ConsolidatePower.png" alt="consolidate-power-1" />} />
+        <MovablePiece id="consolidate-power-2" piece={<Piece src="/images/order-tokens/ConsolidatePower.png" alt="consolidate-power-2" />} />
       </div>
       </>
     }
