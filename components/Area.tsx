@@ -26,7 +26,7 @@ export default function Area({top, left, width, height, housePieces, houseOfPlay
             {housePieces.map((housePiece, index) => {
                 const id = `house-piece-top-${top}-left-${left}-index-${index}`;
                 const piece = <Piece key={index} src={`/images/house-pieces/${housePiece.type}-${housePiece.house}.png`} alt={id} />
-                if (housePiece.house === houseOfPlayer && housePiece.type !== "garrison") {
+                if (housePiece.house === houseOfPlayer && !["garrison", "power"].includes(housePiece.type)) {
                     return (
                         <MovablePiece key={index} piece={piece} id={id} />
                     )

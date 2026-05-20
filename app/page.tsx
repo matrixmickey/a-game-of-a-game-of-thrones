@@ -185,13 +185,6 @@ export default async function Home() {
           alt={houseOfPlayer}
         />
       </div>
-      <div>These are your remaining Units:</div>
-      <div>
-        <RemainingUnits type="footman" house={houseOfPlayer} total={10} housePieces={housePieces} />
-        <RemainingUnits type="knight" house={houseOfPlayer} total={5} housePieces={housePieces} />
-        <RemainingUnits type="ship" house={houseOfPlayer} total={6} housePieces={housePieces} />
-        <RemainingUnits type="siege-engine" house={houseOfPlayer} total={2} housePieces={housePieces} />
-      </div>
       <div>Place your Order Tokens:</div>
       <div>
         <MovablePiece id="raid-special" piece={<Piece src="/images/order-tokens/RaidSpecial.png" alt="raid-special" />} />
@@ -209,6 +202,25 @@ export default async function Home() {
         <MovablePiece id="consolidate-power-special" piece={<Piece src="/images/order-tokens/ConsolidatePowerSpecial.png" alt="consolidate-power-special" />} />
         <MovablePiece id="consolidate-power-1" piece={<Piece src="/images/order-tokens/ConsolidatePower.png" alt="consolidate-power-1" />} />
         <MovablePiece id="consolidate-power-2" piece={<Piece src="/images/order-tokens/ConsolidatePower.png" alt="consolidate-power-2" />} />
+      </div>
+      <div>These are your remaining Units:</div>
+      <div>
+        <RemainingUnits type="footman" house={houseOfPlayer} total={10} housePieces={housePieces} />
+        <RemainingUnits type="knight" house={houseOfPlayer} total={5} housePieces={housePieces} />
+        <RemainingUnits type="ship" house={houseOfPlayer} total={6} housePieces={housePieces} />
+        <RemainingUnits type="siege-engine" house={houseOfPlayer} total={2} housePieces={housePieces} />
+      </div>
+      <div>This is your Available Power:</div>
+      <div>
+        {housePieces.filter(housePiece => housePiece.house === houseOfPlayer && housePiece.type === "power" && housePiece.area === "player").map((_, index) => (<Piece key={index} src={`/images/house-pieces/power-${houseOfPlayer}.png`} alt={`power token ${houseOfPlayer}`} />))}
+      </div>
+      <div>This is the Available Power of everyone else:</div>
+      <div>
+        {housePieces.filter(housePiece => housePiece.house !== houseOfPlayer && housePiece.type === "power" && housePiece.area === "player").map((housePiece, index) => (<Piece key={index} src={`/images/house-pieces/power-${housePiece.house}.png`} alt={`power token ${housePiece.house}`} />))}
+      </div>
+      <div>This is the Power Pool:</div>
+      <div>
+        {players.map((player, index) => (<RemainingUnits key={index} type="power" house={player.house} total={20} housePieces={housePieces} />))}
       </div>
       </>
     }
