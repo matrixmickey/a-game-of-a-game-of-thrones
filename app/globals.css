@@ -37,13 +37,17 @@ body {
   align-items: center;
 }
 
-.token {
+.piece {
   display: inline;
   width: 3vw;
   height: auto;
 }
 
-.token.selected {
+.movable-piece {
+  display: inline;
+}
+
+.movable-piece.selected {
   border: 5px solid green;
 }
 

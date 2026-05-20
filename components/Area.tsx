@@ -1,7 +1,8 @@
 "use client";
 
 import { HousePiece } from "@/types/HousePiece";
-import HousePieceImage from "./HousePieceImage";
+import MovablePiece from "./MovablePiece";
+import Piece from "./Piece";
 
 export default function Area({top, left, width, height, housePieces, houseOfPlayer} : {top: number, left: number, width: number, height: number, housePieces: HousePiece[], houseOfPlayer: string | undefined}) {
     return (
@@ -11,18 +12,28 @@ export default function Area({top, left, width, height, housePieces, houseOfPlay
             onDragOver={ev => ev.preventDefault()}
             onDrop={ev => {
                 ev.preventDefault();
-                (ev.currentTarget as HTMLDivElement).appendChild(document.getElementById(ev.dataTransfer.getData('text')) as HTMLImageElement)
+                const movablePiece = document.getElementById(ev.dataTransfer.getData('text')) as HTMLDivElement;
+                if (!movablePiece) return;
+                (ev.currentTarget as HTMLDivElement).appendChild(movablePiece);
             }}
             onClick={ev => {
-                const token = document.getElementsByClassName('selected').item(0);
-                if (!token) return;
-                (ev.currentTarget as HTMLDivElement).appendChild(token);
-                token.classList.remove('selected');
+                const movablePiece = document.getElementsByClassName('selected').item(0);
+                if (!movablePiece) return;
+                (ev.currentTarget as HTMLDivElement).appendChild(movablePiece);
+                movablePiece.classList.remove('selected');
             }}
         >
-            {housePieces.map((housePiece, index) => (
-                <HousePieceImage key={index} id={`house-piece-top-${top}-left-${left}-index-${index}`} src={`/images/house-pieces/units/${housePiece.type}-${housePiece.house}.png`} isMovable={housePiece.house === houseOfPlayer} />
-            ))}
+            {housePieces.map((housePiece, index) => {
+                const id = `house-piece-top-${top}-left-${left}-index-${index}`;
+                const piece = <Piece key={index} src={`/images/house-pieces/units/${housePiece.type}-${housePiece.house}.png`} alt={id} />
+                if (housePiece.house === houseOfPlayer) {
+                    return (
+                        <MovablePiece key={index} piece={piece} id={id} />
+                    )
+                } else {
+                    return piece;
+                }
+            })}
         </div>
     )
 }

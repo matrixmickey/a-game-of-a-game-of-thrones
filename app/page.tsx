@@ -1,8 +1,9 @@
 import joinGame from "@/actions/joinGame";
 import Area from "@/components/Area";
-import HousePieceImage from "@/components/HousePieceImage";
+import MovablePiece from "@/components/MovablePiece";
+import Piece from "@/components/Piece";
+import RemainingUnits from "@/components/RemainingUnits";
 import SubmitButton from "@/components/SubmitButton";
-import UnitsWithoutArea from "@/components/UnitsWithoutArea";
 import { auth0 } from "@/lib/auth0";
 import { Game } from "@/types/Game";
 import { HousePiece } from "@/types/HousePiece";
@@ -53,66 +54,42 @@ export default async function Home() {
         height={2975}
         loading="eager"
       />
-      <Image
+      <Piece
         src="/images/wildling-threat-token.png"
         alt="WTT"
-        width={0}
-        height={0}
-        sizes="3vw"
-        className={`token wildling-threat-token position-${game.wildlingThreat}`}
-        loading="eager"
+        className={`wildling-threat-token position-${game.wildlingThreat}`}
       />
-      <Image
+      <Piece
         src="/images/game-round-marker.png"
         alt="GRM"
-        width={0}
-        height={0}
-        sizes="3vw"
-        className={`token game-round-marker position-${game.round}`}
-        loading="eager"
+        className={`game-round-marker position-${game.round}`}
       />
       {players.map((player, index) => (
         <div key={index}>
-          <Image
+          <Piece
             src={`/images/influence-tokens/${player.house}.png`}
             alt={`${player.house}`}
-            width={0}
-            height={0}
-            sizes="3vw"
-            className={`token influence-token iron-throne-track position-${player.ironThroneTrack}`}
-            loading="eager"
+            className={`influence-token iron-throne-track position-${player.ironThroneTrack}`}
           />
-          <Image
+          <Piece
             src={`/images/influence-tokens/${player.house}.png`}
             alt={`${player.house}`}
-            width={0}
-            height={0}
-            sizes="3vw"
-            className={`token influence-token fiefdoms-track position-${player.fiefdomsTrack}`}
-            loading="eager"
+            className={`influence-token fiefdoms-track position-${player.fiefdomsTrack}`}
           />
-          <Image
+          <Piece
             src={`/images/influence-tokens/${player.house}.png`}
             alt={`${player.house}`}
-            width={0}
-            height={0}
-            sizes="3vw"
-            className={`token influence-token kings-court-track position-${player.kingsCourtTrack}`}
-            loading="eager"
+            className={`influence-token kings-court-track position-${player.kingsCourtTrack}`}
           />
         </div>
       ))}
       {Array.from({length: 7}, (_, index) => (
         <div key={index} className={`supply-track position-${index}`}>
           {players.filter(player => player.supplyTrack === index).map((player, index) => (
-            <Image
+            <Piece
               key={index}
               src={`/images/influence-tokens/${player.house}.png`}
               alt={player.house}
-              width={0}
-              height={0}
-              sizes="3vw"
-              className="token"
             />
           ))}
         </div>
@@ -180,39 +157,35 @@ export default async function Home() {
       <>
       <div>
         You are House {houseOfPlayer}:
-        <Image
+        <Piece
           src={`/images/influence-tokens/${houseOfPlayer}.png`}
           alt={houseOfPlayer}
-          width={0}
-          height={0}
-          sizes="3vw"
-          className="token"
         />
       </div>
       <div>These are your remaining Units:</div>
       <div>
-        <UnitsWithoutArea type="footman" house={houseOfPlayer} total={10} housePieces={housePieces} />
-        <UnitsWithoutArea type="knight" house={houseOfPlayer} total={5} housePieces={housePieces} />
-        <UnitsWithoutArea type="ship" house={houseOfPlayer} total={6} housePieces={housePieces} />
-        <UnitsWithoutArea type="siege-engine" house={houseOfPlayer} total={2} housePieces={housePieces} />
+        <RemainingUnits type="footman" house={houseOfPlayer} total={10} housePieces={housePieces} />
+        <RemainingUnits type="knight" house={houseOfPlayer} total={5} housePieces={housePieces} />
+        <RemainingUnits type="ship" house={houseOfPlayer} total={6} housePieces={housePieces} />
+        <RemainingUnits type="siege-engine" house={houseOfPlayer} total={2} housePieces={housePieces} />
       </div>
       <div>Place your Order Tokens:</div>
       <div>
-        <HousePieceImage id="raid-special" src="/images/house-pieces/order-tokens/RaidSpecial.png" isMovable={true} />
-        <HousePieceImage id="raid-1" src="/images/house-pieces/order-tokens/Raid.png" isMovable={true} />
-        <HousePieceImage id="raid-2" src="/images/house-pieces/order-tokens/Raid.png" isMovable={true} />
-        <HousePieceImage id="march-special" src="/images/house-pieces/order-tokens/MarchSpecial.png" isMovable={true} />
-        <HousePieceImage id="march" src="/images/house-pieces/order-tokens/March.png" isMovable={true} />
-        <HousePieceImage id="march-minus-one" src="/images/house-pieces/order-tokens/MarchMinusOne.png" isMovable={true} />
-        <HousePieceImage id="defense-special" src="/images/house-pieces/order-tokens/DefenseSpecial.png" isMovable={true} />
-        <HousePieceImage id="defense-1" src="/images/house-pieces/order-tokens/Defense.png" isMovable={true} />
-        <HousePieceImage id="defense-2" src="/images/house-pieces/order-tokens/Defense.png" isMovable={true} />
-        <HousePieceImage id="support-special" src="/images/house-pieces/order-tokens/SupportSpecial.png" isMovable={true} />
-        <HousePieceImage id="support-1" src="/images/house-pieces/order-tokens/Support.png" isMovable={true} />
-        <HousePieceImage id="support-2" src="/images/house-pieces/order-tokens/Support.png" isMovable={true} />
-        <HousePieceImage id="consolidate-power-special" src="/images/house-pieces/order-tokens/ConsolidatePowerSpecial.png" isMovable={true} />
-        <HousePieceImage id="consolidate-power-1" src="/images/house-pieces/order-tokens/ConsolidatePower.png" isMovable={true} />
-        <HousePieceImage id="consolidate-power-2" src="/images/house-pieces/order-tokens/ConsolidatePower.png" isMovable={true} />
+        <MovablePiece id="raid-special" piece={<Piece src="/images/house-pieces/order-tokens/RaidSpecial.png" alt="raid-special" />} />
+        <MovablePiece id="raid-1" piece={<Piece src="/images/house-pieces/order-tokens/Raid.png" alt="raid-1" />} />
+        <MovablePiece id="raid-2" piece={<Piece src="/images/house-pieces/order-tokens/Raid.png" alt="raid-2" />} />
+        <MovablePiece id="march-special" piece={<Piece src="/images/house-pieces/order-tokens/MarchSpecial.png" alt="march-special" />} />
+        <MovablePiece id="march" piece={<Piece src="/images/house-pieces/order-tokens/March.png" alt="march" />} />
+        <MovablePiece id="march-minus-one" piece={<Piece src="/images/house-pieces/order-tokens/MarchMinusOne.png" alt="march-minus-onel" />} />
+        <MovablePiece id="defense-special" piece={<Piece src="/images/house-pieces/order-tokens/DefenseSpecial.png" alt="defense-special" />} />
+        <MovablePiece id="defense-1" piece={<Piece src="/images/house-pieces/order-tokens/Defense.png" alt="defense-1" />} />
+        <MovablePiece id="defense-2" piece={<Piece src="/images/house-pieces/order-tokens/Defense.png" alt="defense-2" />} />
+        <MovablePiece id="support-special" piece={<Piece src="/images/house-pieces/order-tokens/SupportSpecial.png" alt="support-special" />} />
+        <MovablePiece id="support-1" piece={<Piece src="/images/house-pieces/order-tokens/Support.png" alt="support-1" />} />
+        <MovablePiece id="support-2" piece={<Piece src="/images/house-pieces/order-tokens/Support.png" alt="support-2" />} />
+        <MovablePiece id="consolidate-power-special" piece={<Piece src="/images/house-pieces/order-tokens/ConsolidatePowerSpecial.png" alt="consolidate-power-special" />} />
+        <MovablePiece id="consolidate-power-1" piece={<Piece src="/images/house-pieces/order-tokens/ConsolidatePower.png" alt="consolidate-power-1" />} />
+        <MovablePiece id="consolidate-power-2" piece={<Piece src="/images/house-pieces/order-tokens/ConsolidatePower.png" alt="consolidate-power-2" />} />
       </div>
       </>
     }
