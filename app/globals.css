@@ -146,3 +146,41 @@ body {
 .supply-track.position-6 {
   top: 42.3%;
 }
+
+.victory-track {
+  position: absolute;
+  left: 86%;
+  width: 14%;
+  height: 3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.victory-track.position-1 {
+  top: 95.25%;
+}
+
+.victory-track.position-2 {
+  top: 90.75%;
+}
+
+.victory-track.position-3 {
+  top: 86.25%;
+}
+
+.victory-track.position-4 {
+  top: 81.75%;
+}
+
+.victory-track.position-5 {
+  top: 77.25%;
+}
+
+.victory-track.position-6 {
+  top: 72.75%;
+}
+
+.victory-track.position-7 {
+  top: 68.25%;
+}
