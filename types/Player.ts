@@ -1,5 +1,5 @@
 export type Player = {
-    email: string;
+    email?: string;
     house: string;
     ironThroneTrack: number;
     fiefdomsTrack: number;

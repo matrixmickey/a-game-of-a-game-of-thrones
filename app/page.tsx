@@ -1,3 +1,4 @@
+import createGame from "@/actions/createGame";
 import joinGame from "@/actions/joinGame";
 import Area from "@/components/Area";
 import MovablePiece from "@/components/MovablePiece";
@@ -16,13 +17,24 @@ export default async function Home() {
 
   const bigquery = new BigQuery();
 
+  let [gameRows] = await bigquery.query('SELECT * FROM `a-game-of-a-game-of-thrones.dataset.games` LIMIT 1000');
+
+  if (gameRows.length === 0) {
+    await createGame();
+    [gameRows] = await bigquery.query('SELECT * FROM `a-game-of-a-game-of-thrones.dataset.games` LIMIT 1000');
+  }
+
+  const game = gameRows[0] as Game;
+
   const [playerRows] = await bigquery.query('SELECT * FROM `a-game-of-a-game-of-thrones.dataset.players` LIMIT 1000');
 
   const players = playerRows as Player[];
 
+  const assignedPlayers = players.filter(player => player.email);
+
   const player = session ? players.find(player => player.email === session?.user.email) : undefined;
 
-  if (players.length < 6) {
+  if (assignedPlayers.length < 6) {
     if (!session) {
       return "Log in to play";
     } else if (!player) {
@@ -33,10 +45,6 @@ export default async function Home() {
       )
     }
   }
-
-  const [gameRows] = await bigquery.query('SELECT * FROM `a-game-of-a-game-of-thrones.dataset.games` LIMIT 1000');
-
-  const game = gameRows[0] as Game;
 
   const [housePieceRows] = await bigquery.query('SELECT * FROM `a-game-of-a-game-of-thrones.dataset.house-pieces` LIMIT 1000');
 
