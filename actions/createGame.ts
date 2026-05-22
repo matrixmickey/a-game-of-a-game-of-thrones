@@ -7,7 +7,7 @@ export default async function createGame() {
 
     await bigQuery.query("TRUNCATE TABLE `a-game-of-a-game-of-thrones.dataset.house-pieces`");
 
-    await bigQuery.query("INSERT INTO `a-game-of-a-game-of-thrones.dataset.games` (wildlingThreat, round, phase) VALUES (2, 1, 'Planning')");
+    await bigQuery.query("INSERT INTO `a-game-of-a-game-of-thrones.dataset.games` (wildlingThreat, round, phase) VALUES (2, 1, 'Planning - Assign Orders')");
 
     await bigQuery.query(`INSERT INTO \`a-game-of-a-game-of-thrones.dataset.players\` (house, ironThroneTrack, fiefdomsTrack, kingsCourtTrack, supplyTrack, isDone) VALUES
         ('Stark', 3, 4, 2, 1, false),

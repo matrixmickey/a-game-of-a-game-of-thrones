@@ -1,6 +1,8 @@
+import assignOrderTokens from "@/actions/assignOrderTokens";
 import createGame from "@/actions/createGame";
 import joinGame from "@/actions/joinGame";
 import Area from "@/components/Area";
+import DoneForm from "@/components/DoneForm";
 import MovablePiece from "@/components/MovablePiece";
 import Piece from "@/components/Piece";
 import RemainingUnits from "@/components/RemainingUnits";
@@ -32,12 +34,12 @@ export default async function Home() {
 
   const assignedPlayers = players.filter(player => player.email);
 
-  const player = session ? players.find(player => player.email === session?.user.email) : undefined;
+  const you = session ? assignedPlayers.find(player => player.email === session?.user.email) : undefined;
 
   if (assignedPlayers.length < 6) {
     if (!session) {
       return "Log in to play";
-    } else if (!player) {
+    } else if (!you) {
       return (
         <form action={joinGame}>
           <SubmitButton notPendingText="Join Game" pendingText="Joining..." />
@@ -49,8 +51,6 @@ export default async function Home() {
   const [housePieceRows] = await bigquery.query('SELECT * FROM `a-game-of-a-game-of-thrones.dataset.house-pieces` LIMIT 1000');
 
   const housePieces = housePieceRows as HousePiece[];
-
-  const houseOfPlayer = player?.house;
 
   const areas = [
     {top: 0, left: 0, width: 10, height: 35, name: "Bay Of Ice", muster: 0},
@@ -174,56 +174,71 @@ export default async function Home() {
           ))}
         </div>
       ))}
-      {areas.map((area, index) => <Area key={index} top={area.top} left={area.left} width={area.width} height={area.height} housePieces={housePieces.filter(housePiece => housePiece.area === area.name)} houseOfPlayer={houseOfPlayer} />)}
+      {areas.map((area, index) => <Area key={index} top={area.top} left={area.left} width={area.width} height={area.height} housePieces={housePieces.filter(housePiece => housePiece.area === area.name)} yourHouse={you?.house} />)}
     </div>
-    {houseOfPlayer &&
+    {you &&
       <>
-      <div>
-        You are House {houseOfPlayer}:
-        <Piece
-          src={`/images/influence-tokens/${houseOfPlayer}.png`}
-          alt={houseOfPlayer}
-        />
+      <div>Phase: {game.phase}</div>
+      <div>What you need to do right now:</div>
+      {you.isDone ?
+        <div>Nothing right now. Waiting on Houses: {players.filter(player => !player.isDone).map(player => <div>player.house</div>)}</div>
+      : game.phase === 'Planning - Assign Orders' &&
+        <>
+        <div>Assign facedown Order tokens to each area containing one or more of your units. These are your Order tokens:</div>
+        <div>
+          <MovablePiece id="raid-special" piece={<Piece src="/images/order-tokens/RaidSpecial.png" alt="raid-special" />} />
+          <MovablePiece id="raid-1" piece={<Piece src="/images/order-tokens/Raid.png" alt="raid-1" />} />
+          <MovablePiece id="raid-2" piece={<Piece src="/images/order-tokens/Raid.png" alt="raid-2" />} />
+          <MovablePiece id="march-special" piece={<Piece src="/images/order-tokens/MarchSpecial.png" alt="march-special" />} />
+          <MovablePiece id="march" piece={<Piece src="/images/order-tokens/March.png" alt="march" />} />
+          <MovablePiece id="march-minus-one" piece={<Piece src="/images/order-tokens/MarchMinusOne.png" alt="march-minus-onel" />} />
+          <MovablePiece id="defense-special" piece={<Piece src="/images/order-tokens/DefenseSpecial.png" alt="defense-special" />} />
+          <MovablePiece id="defense-1" piece={<Piece src="/images/order-tokens/Defense.png" alt="defense-1" />} />
+          <MovablePiece id="defense-2" piece={<Piece src="/images/order-tokens/Defense.png" alt="defense-2" />} />
+          <MovablePiece id="support-special" piece={<Piece src="/images/order-tokens/SupportSpecial.png" alt="support-special" />} />
+          <MovablePiece id="support-1" piece={<Piece src="/images/order-tokens/Support.png" alt="support-1" />} />
+          <MovablePiece id="support-2" piece={<Piece src="/images/order-tokens/Support.png" alt="support-2" />} />
+          <MovablePiece id="consolidate-power-special" piece={<Piece src="/images/order-tokens/ConsolidatePowerSpecial.png" alt="consolidate-power-special" />} />
+          <MovablePiece id="consolidate-power-1" piece={<Piece src="/images/order-tokens/ConsolidatePower.png" alt="consolidate-power-1" />} />
+          <MovablePiece id="consolidate-power-2" piece={<Piece src="/images/order-tokens/ConsolidatePower.png" alt="consolidate-power-2" />} />
+        </div>
+        <DoneForm action={assignOrderTokens} submitButton={<SubmitButton notPendingText="Click here when done assigning your Order tokens" pendingText="Submitting..." />} />
+        </>
+      }
+      </>
+    }
+    {you &&
+      <div className="info">
+        <div>
+          You are House {you.house}:
+          <Piece
+            src={`/images/influence-tokens/${you.house}.png`}
+            alt={you.house}
+          />
+        </div>
+        <div>These are your Available Units:</div>
+        <div>
+          <RemainingUnits type="footman" house={you.house} total={10} housePieces={housePieces} />
+          <RemainingUnits type="knight" house={you.house} total={5} housePieces={housePieces} />
+          <RemainingUnits type="ship" house={you.house} total={6} housePieces={housePieces} />
+          <RemainingUnits type="siege-engine" house={you.house} total={2} housePieces={housePieces} />
+        </div>
+        <div>This is your Available Power:</div>
+        <div>
+          {housePieces.filter(housePiece => housePiece.house === you.house && housePiece.type === "power" && housePiece.area === "player").map((_, index) => (<Piece key={index} src={`/images/house-pieces/power-${you.house}.png`} alt={`power token ${you.house}`} />))}
+        </div>
       </div>
-      <div>Place your Order Tokens:</div>
-      <div>
-        <MovablePiece id="raid-special" piece={<Piece src="/images/order-tokens/RaidSpecial.png" alt="raid-special" />} />
-        <MovablePiece id="raid-1" piece={<Piece src="/images/order-tokens/Raid.png" alt="raid-1" />} />
-        <MovablePiece id="raid-2" piece={<Piece src="/images/order-tokens/Raid.png" alt="raid-2" />} />
-        <MovablePiece id="march-special" piece={<Piece src="/images/order-tokens/MarchSpecial.png" alt="march-special" />} />
-        <MovablePiece id="march" piece={<Piece src="/images/order-tokens/March.png" alt="march" />} />
-        <MovablePiece id="march-minus-one" piece={<Piece src="/images/order-tokens/MarchMinusOne.png" alt="march-minus-onel" />} />
-        <MovablePiece id="defense-special" piece={<Piece src="/images/order-tokens/DefenseSpecial.png" alt="defense-special" />} />
-        <MovablePiece id="defense-1" piece={<Piece src="/images/order-tokens/Defense.png" alt="defense-1" />} />
-        <MovablePiece id="defense-2" piece={<Piece src="/images/order-tokens/Defense.png" alt="defense-2" />} />
-        <MovablePiece id="support-special" piece={<Piece src="/images/order-tokens/SupportSpecial.png" alt="support-special" />} />
-        <MovablePiece id="support-1" piece={<Piece src="/images/order-tokens/Support.png" alt="support-1" />} />
-        <MovablePiece id="support-2" piece={<Piece src="/images/order-tokens/Support.png" alt="support-2" />} />
-        <MovablePiece id="consolidate-power-special" piece={<Piece src="/images/order-tokens/ConsolidatePowerSpecial.png" alt="consolidate-power-special" />} />
-        <MovablePiece id="consolidate-power-1" piece={<Piece src="/images/order-tokens/ConsolidatePower.png" alt="consolidate-power-1" />} />
-        <MovablePiece id="consolidate-power-2" piece={<Piece src="/images/order-tokens/ConsolidatePower.png" alt="consolidate-power-2" />} />
-      </div>
-      <div>These are your Available Units:</div>
-      <div>
-        <RemainingUnits type="footman" house={houseOfPlayer} total={10} housePieces={housePieces} />
-        <RemainingUnits type="knight" house={houseOfPlayer} total={5} housePieces={housePieces} />
-        <RemainingUnits type="ship" house={houseOfPlayer} total={6} housePieces={housePieces} />
-        <RemainingUnits type="siege-engine" house={houseOfPlayer} total={2} housePieces={housePieces} />
-      </div>
-      <div>This is your Available Power:</div>
-      <div>
-        {housePieces.filter(housePiece => housePiece.house === houseOfPlayer && housePiece.type === "power" && housePiece.area === "player").map((_, index) => (<Piece key={index} src={`/images/house-pieces/power-${houseOfPlayer}.png`} alt={`power token ${houseOfPlayer}`} />))}
-      </div>
+    }
+    <div className="info">
       <div>This is the Available Power of everyone else:</div>
       <div>
-        {housePieces.filter(housePiece => housePiece.house !== houseOfPlayer && housePiece.type === "power" && housePiece.area === "player").map((housePiece, index) => (<Piece key={index} src={`/images/house-pieces/power-${housePiece.house}.png`} alt={`power token ${housePiece.house}`} />))}
+        {housePieces.filter(housePiece => housePiece.house !== you?.house && housePiece.type === "power" && housePiece.area === "player").map((housePiece, index) => (<Piece key={index} src={`/images/house-pieces/power-${housePiece.house}.png`} alt={`power token ${housePiece.house}`} />))}
       </div>
       <div>This is the Power Pool:</div>
       <div>
         {players.map((player, index) => (<RemainingUnits key={index} type="power" house={player.house} total={20} housePieces={housePieces} />))}
       </div>
-      </>
-    }
+    </div>
     </>
   );
 }
