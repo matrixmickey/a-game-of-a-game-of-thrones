@@ -113,6 +113,12 @@ export default async function Home() {
     {top: 94, left: 39, width: 36, height: 6, name: "East Summer Sea", muster: 0}
   ];
 
+  const areasWithHousePieceData = areas.map(area => {
+    const housePiecesInArea = housePieces.filter(housePiece => housePiece.area === area.name);
+    const containsYourUnits = housePiecesInArea.some(housePiece => housePiece.house === you?.house && !["garrison", "power"].includes(housePiece.type));
+    return {...area, housePieces: housePiecesInArea, containsYourUnits};
+  });
+
   return (
     <>
     <div className="board-container">
@@ -174,7 +180,7 @@ export default async function Home() {
           ))}
         </div>
       ))}
-      {areas.map((area, index) => <Area key={index} top={area.top} left={area.left} width={area.width} height={area.height} housePieces={housePieces.filter(housePiece => housePiece.area === area.name)} yourHouse={you?.house} />)}
+      {areasWithHousePieceData.map((area, index) => <Area key={index} id={area.name} top={area.top} left={area.left} width={area.width} height={area.height} housePieces={area.housePieces} containsYourUnits={area.containsYourUnits} />)}
     </div>
     {you &&
       <>
@@ -184,25 +190,25 @@ export default async function Home() {
         <div>Nothing right now. Waiting on Houses: {players.filter(player => !player.isDone).map(player => <div>player.house</div>)}</div>
       : game.phase === 'Planning - Assign Orders' &&
         <>
-        <div>Assign facedown Order tokens to each area containing one or more of your units. These are your Order tokens:</div>
+        <div>Place exactly one Order token on each area you control that contains at least one of youe units (Footman, Knight, Ship, or Siege Engine). The other players will not see which Order token you have assigned to each area until after all players have submitted their assignments. These are your Order tokens:</div>
         <div>
-          <MovablePiece id="raid-special" piece={<Piece src="/images/order-tokens/RaidSpecial.png" alt="raid-special" />} />
-          <MovablePiece id="raid-1" piece={<Piece src="/images/order-tokens/Raid.png" alt="raid-1" />} />
-          <MovablePiece id="raid-2" piece={<Piece src="/images/order-tokens/Raid.png" alt="raid-2" />} />
-          <MovablePiece id="march-special" piece={<Piece src="/images/order-tokens/MarchSpecial.png" alt="march-special" />} />
-          <MovablePiece id="march" piece={<Piece src="/images/order-tokens/March.png" alt="march" />} />
-          <MovablePiece id="march-minus-one" piece={<Piece src="/images/order-tokens/MarchMinusOne.png" alt="march-minus-onel" />} />
-          <MovablePiece id="defense-special" piece={<Piece src="/images/order-tokens/DefenseSpecial.png" alt="defense-special" />} />
-          <MovablePiece id="defense-1" piece={<Piece src="/images/order-tokens/Defense.png" alt="defense-1" />} />
-          <MovablePiece id="defense-2" piece={<Piece src="/images/order-tokens/Defense.png" alt="defense-2" />} />
-          <MovablePiece id="support-special" piece={<Piece src="/images/order-tokens/SupportSpecial.png" alt="support-special" />} />
-          <MovablePiece id="support-1" piece={<Piece src="/images/order-tokens/Support.png" alt="support-1" />} />
-          <MovablePiece id="support-2" piece={<Piece src="/images/order-tokens/Support.png" alt="support-2" />} />
-          <MovablePiece id="consolidate-power-special" piece={<Piece src="/images/order-tokens/ConsolidatePowerSpecial.png" alt="consolidate-power-special" />} />
-          <MovablePiece id="consolidate-power-1" piece={<Piece src="/images/order-tokens/ConsolidatePower.png" alt="consolidate-power-1" />} />
-          <MovablePiece id="consolidate-power-2" piece={<Piece src="/images/order-tokens/ConsolidatePower.png" alt="consolidate-power-2" />} />
+          <MovablePiece id="raid-special" piece={<Piece className="order-token" src="/images/order-tokens/RaidSpecial.png" alt="raid-special" />} />
+          <MovablePiece id="raid-1" piece={<Piece className="order-token" src="/images/order-tokens/Raid.png" alt="raid-1" />} />
+          <MovablePiece id="raid-2" piece={<Piece className="order-token" src="/images/order-tokens/Raid.png" alt="raid-2" />} />
+          <MovablePiece id="march-special" piece={<Piece className="order-token" src="/images/order-tokens/MarchSpecial.png" alt="march-special" />} />
+          <MovablePiece id="march" piece={<Piece className="order-token" src="/images/order-tokens/March.png" alt="march" />} />
+          <MovablePiece id="march-minus-one" piece={<Piece className="order-token" src="/images/order-tokens/MarchMinusOne.png" alt="march-minus-onel" />} />
+          <MovablePiece id="defense-special" piece={<Piece className="order-token" src="/images/order-tokens/DefenseSpecial.png" alt="defense-special" />} />
+          <MovablePiece id="defense-1" piece={<Piece className="order-token" src="/images/order-tokens/Defense.png" alt="defense-1" />} />
+          <MovablePiece id="defense-2" piece={<Piece className="order-token" src="/images/order-tokens/Defense.png" alt="defense-2" />} />
+          <MovablePiece id="support-special" piece={<Piece className="order-token" src="/images/order-tokens/SupportSpecial.png" alt="support-special" />} />
+          <MovablePiece id="support-1" piece={<Piece className="order-token" src="/images/order-tokens/Support.png" alt="support-1" />} />
+          <MovablePiece id="support-2" piece={<Piece className="order-token" src="/images/order-tokens/Support.png" alt="support-2" />} />
+          <MovablePiece id="consolidate-power-special" piece={<Piece className="order-token" src="/images/order-tokens/ConsolidatePowerSpecial.png" alt="consolidate-power-special" />} />
+          <MovablePiece id="consolidate-power-1" piece={<Piece className="order-token" src="/images/order-tokens/ConsolidatePower.png" alt="consolidate-power-1" />} />
+          <MovablePiece id="consolidate-power-2" piece={<Piece className="order-token" src="/images/order-tokens/ConsolidatePower.png" alt="consolidate-power-2" />} />
         </div>
-        <DoneForm action={assignOrderTokens} submitButton={<SubmitButton notPendingText="Click here when done assigning your Order tokens" pendingText="Submitting..." />} />
+        <DoneForm action={assignOrderTokens.bind(null, areasWithHousePieceData.filter(area => area.containsYourUnits).map(area => area.name), housePieces)} submitButton={<SubmitButton notPendingText="Click here when done assigning your Order tokens" pendingText="Submitting..." />} />
         </>
       }
       </>

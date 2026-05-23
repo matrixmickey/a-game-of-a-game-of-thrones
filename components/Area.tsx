@@ -3,10 +3,10 @@
 import { HousePiece } from "@/types/HousePiece";
 import Piece from "./Piece";
 
-export default function Area({top, left, width, height, housePieces, yourHouse} : {top: number, left: number, width: number, height: number, housePieces: HousePiece[], yourHouse: string | undefined}) {
-    const containsYourUnits = housePieces.some(housePiece => housePiece.house === yourHouse && !["garrison", "power"].includes(housePiece.type));
+export default function Area({id, top, left, width, height, housePieces, containsYourUnits} : {id: string, top: number, left: number, width: number, height: number, housePieces: HousePiece[], containsYourUnits: boolean}) {
     return (
         <div
+            id={id}
             className={`area${containsYourUnits ? " contains-your-units" : ""}`}
             style={{top: `${top}%`, left: `${left}%`, width: `${width}%`, height: `${height}%`}}
             onDragOver={containsYourUnits ? ev => ev.preventDefault() : undefined}
