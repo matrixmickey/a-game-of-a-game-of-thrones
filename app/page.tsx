@@ -2,6 +2,7 @@ import assignOrderTokens from "@/actions/assignOrderTokens";
 import createGame from "@/actions/createGame";
 import joinGame from "@/actions/joinGame";
 import Area from "@/components/Area";
+import BoardAndActionArea from "@/components/BoardAndActionArea";
 import DoneForm from "@/components/DoneForm";
 import MovablePiece from "@/components/MovablePiece";
 import Piece from "@/components/Piece";
@@ -113,75 +114,70 @@ export default async function Home() {
     {top: 94, left: 39, width: 36, height: 6, name: "East Summer Sea", muster: 0}
   ];
 
-  const areasWithHousePieceData = areas.map(area => {
-    const housePiecesInArea = housePieces.filter(housePiece => housePiece.area === area.name);
-    const containsYourUnits = housePiecesInArea.some(housePiece => housePiece.house === you?.house && !["garrison", "power"].includes(housePiece.type));
-    return {...area, housePieces: housePiecesInArea, containsYourUnits};
-  });
-
   return (
     <>
-    <div className="board-container">
-      <Image
-        src="/images/board.jpg"
-        alt="The game board should be displaying here..."
-        width={1980}
-        height={2975}
-        loading="eager"
-      />
-      <Piece
-        src="/images/wildling-threat-token.png"
-        alt="WTT"
-        className={`wildling-threat-token position-${game.wildlingThreat}`}
-      />
-      <Piece
-        src="/images/game-round-marker.png"
-        alt="GRM"
-        className={`game-round-marker position-${game.round}`}
-      />
-      {players.map((player, index) => (
-        <div key={index}>
-          <Piece
-            src={`/images/influence-tokens/${player.house}.png`}
-            alt={`${player.house}`}
-            className={`influence-token iron-throne-track position-${player.ironThroneTrack}`}
-          />
-          <Piece
-            src={`/images/influence-tokens/${player.house}.png`}
-            alt={`${player.house}`}
-            className={`influence-token fiefdoms-track position-${player.fiefdomsTrack}`}
-          />
-          <Piece
-            src={`/images/influence-tokens/${player.house}.png`}
-            alt={`${player.house}`}
-            className={`influence-token kings-court-track position-${player.kingsCourtTrack}`}
-          />
-        </div>
-      ))}
-      {Array.from({length: 7}, (_, index) => (
-        <div key={index} className={`supply-track position-${index}`}>
-          {players.filter(player => player.supplyTrack === index).map((player, index) => (
+    <BoardAndActionArea you={you} areas={areas} housePieces={housePieces} board={
+      <>
+        <Image
+          src="/images/board.jpg"
+          alt="The game board should be displaying here..."
+          width={1980}
+          height={2975}
+          loading="eager"
+        />
+        <Piece
+          src="/images/wildling-threat-token.png"
+          alt="WTT"
+          className={`wildling-threat-token position-${game.wildlingThreat}`}
+        />
+        <Piece
+          src="/images/game-round-marker.png"
+          alt="GRM"
+          className={`game-round-marker position-${game.round}`}
+        />
+        {players.map((player, index) => (
+          <div key={index}>
             <Piece
-              key={index}
               src={`/images/influence-tokens/${player.house}.png`}
-              alt={player.house}
+              alt={`${player.house}`}
+              className={`influence-token iron-throne-track position-${player.ironThroneTrack}`}
             />
-          ))}
-        </div>
-      ))}
-      {Array.from({length: 7}, (_, index) => (
-        <div key={index} className={`victory-track position-${index + 1}`}>
-          {players.filter(player => [...new Set(housePieces.filter(housePiece => housePiece.house === player.house).map(housePiece => housePiece.area))].filter(housePieceArea => (areas.find(area => area.name === housePieceArea)?.muster ?? 0) > 0).length === index + 1).map((player, index) => (
             <Piece
-              key={index}
               src={`/images/influence-tokens/${player.house}.png`}
-              alt={player.house}
+              alt={`${player.house}`}
+              className={`influence-token fiefdoms-track position-${player.fiefdomsTrack}`}
             />
-          ))}
-        </div>
-      ))}
-      {areasWithHousePieceData.map((area, index) => <Area key={index} id={area.name} top={area.top} left={area.left} width={area.width} height={area.height} housePieces={area.housePieces} containsYourUnits={area.containsYourUnits} />)}
-    </div>
+            <Piece
+              src={`/images/influence-tokens/${player.house}.png`}
+              alt={`${player.house}`}
+              className={`influence-token kings-court-track position-${player.kingsCourtTrack}`}
+            />
+          </div>
+        ))}
+        {Array.from({length: 7}, (_, index) => (
+          <div key={index} className={`supply-track position-${index}`}>
+            {players.filter(player => player.supplyTrack === index).map((player, index) => (
+              <Piece
+                key={index}
+                src={`/images/influence-tokens/${player.house}.png`}
+                alt={player.house}
+              />
+            ))}
+          </div>
+        ))}
+        {Array.from({length: 7}, (_, index) => (
+          <div key={index} className={`victory-track position-${index + 1}`}>
+            {players.filter(player => [...new Set(housePieces.filter(housePiece => housePiece.house === player.house).map(housePiece => housePiece.area))].filter(housePieceArea => (areas.find(area => area.name === housePieceArea)?.muster ?? 0) > 0).length === index + 1).map((player, index) => (
+              <Piece
+                key={index}
+                src={`/images/influence-tokens/${player.house}.png`}
+                alt={player.house}
+              />
+            ))}
+          </div>
+        ))}
+      </>
+    } phaseInformation=
     {you &&
       <>
       <div>Phase: {game.phase}</div>
@@ -191,28 +187,10 @@ export default async function Home() {
       : game.phase === 'Planning - Assign Orders' &&
         <>
         <div>Place exactly one Order token on each area you control that contains at least one of youe units (Footman, Knight, Ship, or Siege Engine). The other players will not see which Order token you have assigned to each area until after all players have submitted their assignments. These are your Order tokens:</div>
-        <div>
-          <MovablePiece id="raid-special" piece={<Piece className="order-token" src="/images/order-tokens/RaidSpecial.png" alt="raid-special" />} />
-          <MovablePiece id="raid-1" piece={<Piece className="order-token" src="/images/order-tokens/Raid.png" alt="raid-1" />} />
-          <MovablePiece id="raid-2" piece={<Piece className="order-token" src="/images/order-tokens/Raid.png" alt="raid-2" />} />
-          <MovablePiece id="march-special" piece={<Piece className="order-token" src="/images/order-tokens/MarchSpecial.png" alt="march-special" />} />
-          <MovablePiece id="march" piece={<Piece className="order-token" src="/images/order-tokens/March.png" alt="march" />} />
-          <MovablePiece id="march-minus-one" piece={<Piece className="order-token" src="/images/order-tokens/MarchMinusOne.png" alt="march-minus-onel" />} />
-          <MovablePiece id="defense-special" piece={<Piece className="order-token" src="/images/order-tokens/DefenseSpecial.png" alt="defense-special" />} />
-          <MovablePiece id="defense-1" piece={<Piece className="order-token" src="/images/order-tokens/Defense.png" alt="defense-1" />} />
-          <MovablePiece id="defense-2" piece={<Piece className="order-token" src="/images/order-tokens/Defense.png" alt="defense-2" />} />
-          <MovablePiece id="support-special" piece={<Piece className="order-token" src="/images/order-tokens/SupportSpecial.png" alt="support-special" />} />
-          <MovablePiece id="support-1" piece={<Piece className="order-token" src="/images/order-tokens/Support.png" alt="support-1" />} />
-          <MovablePiece id="support-2" piece={<Piece className="order-token" src="/images/order-tokens/Support.png" alt="support-2" />} />
-          <MovablePiece id="consolidate-power-special" piece={<Piece className="order-token" src="/images/order-tokens/ConsolidatePowerSpecial.png" alt="consolidate-power-special" />} />
-          <MovablePiece id="consolidate-power-1" piece={<Piece className="order-token" src="/images/order-tokens/ConsolidatePower.png" alt="consolidate-power-1" />} />
-          <MovablePiece id="consolidate-power-2" piece={<Piece className="order-token" src="/images/order-tokens/ConsolidatePower.png" alt="consolidate-power-2" />} />
-        </div>
-        <DoneForm action={assignOrderTokens.bind(null, areasWithHousePieceData.filter(area => area.containsYourUnits).map(area => area.name), housePieces)} submitButton={<SubmitButton notPendingText="Click here when done assigning your Order tokens" pendingText="Submitting..." />} />
         </>
       }
       </>
-    }
+    } />
     {you &&
       <div className="info">
         <div>
