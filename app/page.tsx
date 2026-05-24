@@ -1,10 +1,6 @@
-import assignOrderTokens from "@/actions/assignOrderTokens";
 import createGame from "@/actions/createGame";
 import joinGame from "@/actions/joinGame";
-import Area from "@/components/Area";
 import BoardAndActionArea from "@/components/BoardAndActionArea";
-import DoneForm from "@/components/DoneForm";
-import MovablePiece from "@/components/MovablePiece";
 import Piece from "@/components/Piece";
 import RemainingUnits from "@/components/RemainingUnits";
 import SubmitButton from "@/components/SubmitButton";
@@ -116,7 +112,7 @@ export default async function Home() {
 
   return (
     <>
-    <BoardAndActionArea you={you} areas={areas} housePieces={housePieces} board={
+    <BoardAndActionArea you={you} areas={areas} housePieces={housePieces} phase={game.phase} board={
       <>
         <Image
           src="/images/board.jpg"
