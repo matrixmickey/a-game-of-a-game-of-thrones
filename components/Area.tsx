@@ -1,46 +1,42 @@
 "use client";
 
-import { HousePiece } from "@/types/HousePiece";
-import Piece from "./Piece";
+import { Piece } from "@/types/Piece";
+import PieceComponent from "./Piece";
 import MovablePiece from "./MovablePiece";
 import { Dispatch, SetStateAction } from "react";
 
-export default function Area({name, top, left, width, height, yourHouse, containsYourUnits, areMultipleMovablePiecesAllowed, unmovablePiecesInArea, movablePiecesInArea, movablePieces, setMovablePieces, nameOfSelectedPiece, setNameOfSelectedPiece} : {name: string, top: number, left: number, width: number, height: number, yourHouse: string | undefined, containsYourUnits: boolean, areMultipleMovablePiecesAllowed: boolean, unmovablePiecesInArea: HousePiece[], movablePiecesInArea: HousePiece[], movablePieces: HousePiece[], setMovablePieces: Dispatch<SetStateAction<HousePiece[]>>, nameOfSelectedPiece: string, setNameOfSelectedPiece: Dispatch<SetStateAction<string>>}) {
+export default function Area({name, top, left, width, height, phase, yourHouse, pieces, setPieces, selectedPiece, setSelectedPiece} : {name: string, top: number, left: number, width: number, height: number, phase: string, yourHouse: string | undefined, pieces: Piece[], setPieces: Dispatch<SetStateAction<Piece[]>>, selectedPiece: Piece | undefined, setSelectedPiece: Dispatch<SetStateAction<Piece | undefined>>}) {
     function addMovablePiece() {
-        if (!yourHouse) return;
+        if (!yourHouse || !selectedPiece) return;
 
-        if (!areMultipleMovablePiecesAllowed) {
-            setMovablePieces(movablePieces.filter(movablePiece => movablePiece.area !== name));
-        }
-
-        if (movablePieces.some(movablePiece => movablePiece.type === nameOfSelectedPiece)) {
-            setMovablePieces(movablePieces.map(movablePiece => movablePiece.type === nameOfSelectedPiece ? {...movablePiece, area: name} : movablePiece))
+        if (pieces.some(piece => piece.house === selectedPiece.house && selectedPiece.type === piece.type && selectedPiece.name === piece.name && selectedPiece.area === piece.area)) {
+            setPieces(pieces.map(piece => piece.house === selectedPiece.house && selectedPiece.type === piece.type && selectedPiece.name === piece.name && selectedPiece.area === piece.area ? {...piece, area: name} : piece));
         } else {
-            setMovablePieces([...movablePieces, {house: yourHouse, type: nameOfSelectedPiece, area: name}]);
+            setPieces([...pieces, {...selectedPiece, area: name}]);
         }
-        setNameOfSelectedPiece("");
+        
+        setSelectedPiece(undefined);
     }
 
     return (
         <div
-            className={`area${containsYourUnits ? " contains-your-units" : ""}`}
+            className="area"
             style={{top: `${top}%`, left: `${left}%`, width: `${width}%`, height: `${height}%`}}
-            onDragOver={containsYourUnits ? ev => ev.preventDefault() : undefined}
-            onDrop={containsYourUnits ?  ev => {
+            onDragOver={ev => ev.preventDefault()}
+            onDrop={ev => {
                 ev.preventDefault();
                 addMovablePiece();
-            } : undefined}
-            onClick={containsYourUnits ? ev => {
+            }}
+            onClick={_ => {
                 addMovablePiece();
-            } : undefined}
+            }}
         >
-            {unmovablePiecesInArea.map((unmovablePiece, index) => {
+            {pieces.filter(piece => piece.area !== name ? false : piece.house !== yourHouse ? true : phase === "Planning - Assign Orders" ? piece.type !== "order" : true).map((unmovablePiece, index) => {
                 const id = `house-piece-top-${top}-left-${left}-index-${index}`;
-                return <Piece key={index} src={`/images/house-pieces/${unmovablePiece.type}-${unmovablePiece.house}.png`} alt={id} />
+                return <PieceComponent key={index} src={`/images/pieces/${unmovablePiece.type}/${unmovablePiece.name}${unmovablePiece.type !== "order" ? `/${unmovablePiece.house}` : ""}.png`} alt={id} />
             })}
-            {movablePiecesInArea.map((movablePiece, index) => {
-                const nameOfOrderToken = movablePiece.type.slice(12);
-                return <MovablePiece key={index} piece={<Piece src={`/images/order-tokens/${["raid-1", "raid-2", "defense-1", "defense-2", "support-1", "support-2", "consolidate-power-1", "consolidate-power-2"].includes(nameOfOrderToken) ? nameOfOrderToken.slice(0, -2) : nameOfOrderToken}.png`} alt={movablePiece.type} />} name={movablePiece.type} nameOfSelectedPiece={nameOfSelectedPiece} setNameOfSelectedPiece={setNameOfSelectedPiece} />
+            {pieces.filter(piece => piece.area !== name ? false : piece.house !== yourHouse ? false : phase === "Planning - Assign Orders" ? piece.type === "order" : false).map((movablePiece, index) => {
+                return <MovablePiece key={index} pieceComponent={<PieceComponent src={`/images/pieces/${movablePiece.type}/${movablePiece.name}${movablePiece.type !== "order" ? `/${movablePiece.house}` : ""}.png`} alt={movablePiece.name} />} piece={movablePiece} setSelectedPiece={setSelectedPiece} />
             })}
         </div>
     )

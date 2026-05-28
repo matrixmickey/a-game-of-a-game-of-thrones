@@ -1,8 +1,8 @@
 "use server";
 
-import { HousePiece } from "@/types/HousePiece";
+import { Piece } from "@/types/Piece";
 
-export default async function assignOrderTokens(areasContainingYourUnits: string[], orderTokens: HousePiece[]) {
+export default async function assignOrderTokens(areasContainingYourUnits: string[], orderTokens: Piece[]) {
     let areasContainingYourUnitsString = "";
     for (const area of areasContainingYourUnits) {
         areasContainingYourUnitsString += `${area}, `;

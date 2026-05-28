@@ -1,12 +1,12 @@
 import createGame from "@/actions/createGame";
 import joinGame from "@/actions/joinGame";
 import BoardAndActionArea from "@/components/BoardAndActionArea";
-import Piece from "@/components/Piece";
-import RemainingUnits from "@/components/RemainingUnits";
+import PieceComponent from "@/components/Piece";
+import RemainingPieces from "@/components/RemainingPieces";
 import SubmitButton from "@/components/SubmitButton";
 import { auth0 } from "@/lib/auth0";
 import { Game } from "@/types/Game";
-import { HousePiece } from "@/types/HousePiece";
+import { Piece } from "@/types/Piece";
 import { Player } from "@/types/Player";
 import { BigQuery } from "@google-cloud/bigquery";
 import Image from "next/image";
@@ -45,9 +45,9 @@ export default async function Home() {
     }
   }
 
-  const [housePieceRows] = await bigquery.query('SELECT * FROM `a-game-of-a-game-of-thrones.dataset.house-pieces` LIMIT 1000');
+  const [pieceRows] = await bigquery.query('SELECT * FROM `a-game-of-a-game-of-thrones.dataset.pieces` LIMIT 1000');
 
-  const housePieces = housePieceRows as HousePiece[];
+  const pieces = pieceRows as Piece[];
 
   const areas = [
     {top: 0, left: 0, width: 10, height: 35, name: "Bay Of Ice", muster: 0},
@@ -112,7 +112,7 @@ export default async function Home() {
 
   return (
     <>
-    <BoardAndActionArea you={you} areas={areas} housePieces={housePieces} phase={game.phase} board={
+    <BoardAndActionArea you={you} areas={areas} piecesInitial={pieces} phase={game.phase} board={
       <>
         <Image
           src="/images/board.jpg"
@@ -121,30 +121,30 @@ export default async function Home() {
           height={2975}
           loading="eager"
         />
-        <Piece
-          src="/images/wildling-threat-token.png"
+        <PieceComponent
+          src="/images/pieces/wildling-threat-token.png"
           alt="WTT"
           className={`wildling-threat-token position-${game.wildlingThreat}`}
         />
-        <Piece
-          src="/images/game-round-marker.png"
+        <PieceComponent
+          src="/images/pieces/game-round-marker.png"
           alt="GRM"
           className={`game-round-marker position-${game.round}`}
         />
         {players.map((player, index) => (
           <div key={index}>
-            <Piece
-              src={`/images/influence-tokens/${player.house}.png`}
+            <PieceComponent
+              src={`/images/pieces/influence/${player.house}.png`}
               alt={`${player.house}`}
               className={`influence-token iron-throne-track position-${player.ironThroneTrack}`}
             />
-            <Piece
-              src={`/images/influence-tokens/${player.house}.png`}
+            <PieceComponent
+              src={`/images/pieces/influence/${player.house}.png`}
               alt={`${player.house}`}
               className={`influence-token fiefdoms-track position-${player.fiefdomsTrack}`}
             />
-            <Piece
-              src={`/images/influence-tokens/${player.house}.png`}
+            <PieceComponent
+              src={`/images/pieces/influence/${player.house}.png`}
               alt={`${player.house}`}
               className={`influence-token kings-court-track position-${player.kingsCourtTrack}`}
             />
@@ -153,9 +153,9 @@ export default async function Home() {
         {Array.from({length: 7}, (_, index) => (
           <div key={index} className={`supply-track position-${index}`}>
             {players.filter(player => player.supplyTrack === index).map((player, index) => (
-              <Piece
+              <PieceComponent
                 key={index}
-                src={`/images/influence-tokens/${player.house}.png`}
+                src={`/images/pieces/influence/${player.house}.png`}
                 alt={player.house}
               />
             ))}
@@ -163,10 +163,10 @@ export default async function Home() {
         ))}
         {Array.from({length: 7}, (_, index) => (
           <div key={index} className={`victory-track position-${index + 1}`}>
-            {players.filter(player => [...new Set(housePieces.filter(housePiece => housePiece.house === player.house).map(housePiece => housePiece.area))].filter(housePieceArea => (areas.find(area => area.name === housePieceArea)?.muster ?? 0) > 0).length === index + 1).map((player, index) => (
-              <Piece
+            {players.filter(player => [...new Set(pieces.filter(piece => piece.house === player.house).map(piece => piece.area))].filter(areaContainingPieceOfPlayer => (areas.find(area => area.name === areaContainingPieceOfPlayer)?.muster ?? 0) > 0).length === index + 1).map((player, index) => (
+              <PieceComponent
                 key={index}
-                src={`/images/influence-tokens/${player.house}.png`}
+                src={`/images/pieces/influence/${player.house}.png`}
                 alt={player.house}
               />
             ))}
@@ -191,32 +191,32 @@ export default async function Home() {
       <div className="info">
         <div>
           You are House {you.house}:
-          <Piece
-            src={`/images/influence-tokens/${you.house}.png`}
+          <PieceComponent
+            src={`/images/pieces/influence/${you.house}.png`}
             alt={you.house}
           />
         </div>
         <div>These are your Available Units:</div>
         <div>
-          <RemainingUnits type="footman" house={you.house} total={10} housePieces={housePieces} />
-          <RemainingUnits type="knight" house={you.house} total={5} housePieces={housePieces} />
-          <RemainingUnits type="ship" house={you.house} total={6} housePieces={housePieces} />
-          <RemainingUnits type="siege-engine" house={you.house} total={2} housePieces={housePieces} />
+          <RemainingPieces house={you.house} type="unit" name="footman" total={10} pieces={pieces} />
+          <RemainingPieces house={you.house} type="unit" name="knight" total={5} pieces={pieces} />
+          <RemainingPieces house={you.house} type="unit" name="ship" total={6} pieces={pieces} />
+          <RemainingPieces house={you.house} type="unit" name="siege-engine" total={2} pieces={pieces} />
         </div>
         <div>This is your Available Power:</div>
         <div>
-          {housePieces.filter(housePiece => housePiece.house === you.house && housePiece.type === "power" && housePiece.area === "player").map((_, index) => (<Piece key={index} src={`/images/house-pieces/power-${you.house}.png`} alt={`power token ${you.house}`} />))}
+          {pieces.filter(piece => piece.house === you.house && piece.type === "power" && piece.area === "player").map((_, index) => (<PieceComponent key={index} src={`/images/pieces/power/1/${you.house}.png`} alt={`power token ${you.house}`} />))}
         </div>
       </div>
     }
     <div className="info">
       <div>This is the Available Power of everyone else:</div>
       <div>
-        {housePieces.filter(housePiece => housePiece.house !== you?.house && housePiece.type === "power" && housePiece.area === "player").map((housePiece, index) => (<Piece key={index} src={`/images/house-pieces/power-${housePiece.house}.png`} alt={`power token ${housePiece.house}`} />))}
+        {pieces.filter(piece => piece.house !== you?.house && piece.type === "power" && piece.area === "player").map((piece, index) => (<PieceComponent key={index} src={`/images/pieces/power/1/${piece.house}.png`} alt={`power token ${piece.house}`} />))}
       </div>
       <div>This is the Power Pool:</div>
       <div>
-        {players.map((player, index) => (<RemainingUnits key={index} type="power" house={player.house} total={20} housePieces={housePieces} />))}
+        {players.map((player, index) => (<RemainingPieces key={index} house={player.house} type="power" name="1" total={20} pieces={pieces} />))}
       </div>
     </div>
     </>
