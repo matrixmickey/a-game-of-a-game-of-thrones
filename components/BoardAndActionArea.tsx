@@ -7,7 +7,8 @@ import Area from "./Area";
 import DoneForm from "./DoneForm";
 import assignOrderTokens from "@/actions/assignOrderTokens";
 import SubmitButton from "./SubmitButton";
-import RemainingPieces from "./RemainingPieces";
+import MovablePiece from "./MovablePiece";
+import PieceComponent from "./Piece";
 
 export default function BoardAndActionArea({you, areas, piecesInitial, phase, board, phaseInformation}: {you: Player | undefined, areas: {
     top: number;
@@ -16,10 +17,30 @@ export default function BoardAndActionArea({you, areas, piecesInitial, phase, bo
     height: number;
     name: string;
     muster: number;
-}[], piecesInitial: Piece[], phase: string, board: React.ReactNode, phaseInformation: React.ReactNode}) {    
-    const [pieces, setPieces] = useState(piecesInitial);
+}[], piecesInitial: Piece[], phase: string, board: React.ReactNode, phaseInformation: React.ReactNode}) {
+    const piecesInitialLocal = [...piecesInitial];
 
-    const [selectedPiece, setSelectedPiece] = useState(undefined as Piece | undefined);
+    function addPieces(house: string, type: string, name: string, total: number) {
+        for (let i = 0; i < total - piecesInitial.filter(piece => piece.house === house && piece.type === type && piece.name === name).length; i++) {
+            piecesInitialLocal.push({house, type, name, area: "player", isSelected: false});
+        }
+    }
+
+    if (you && phase === "Planning - Assign Orders") {
+        addPieces(you.house, "order", "raid-special", 1);
+        addPieces(you.house, "order", "raid", 2);
+        addPieces(you.house, "order", "march-special", 1);
+        addPieces(you.house, "order", "march", 1);
+        addPieces(you.house, "order", "march-minus-one", 1);
+        addPieces(you.house, "order", "defense-special", 1);
+        addPieces(you.house, "order", "defense", 2);
+        addPieces(you.house, "order", "support-special", 1);
+        addPieces(you.house, "order", "support", 2);
+        addPieces(you.house, "order", "consolidate-power-special", 1);
+        addPieces(you.house, "order", "consolidate-power", 2);
+    }
+
+    const [pieces, setPieces] = useState(piecesInitialLocal);
 
     return (
         <>
@@ -36,25 +57,13 @@ export default function BoardAndActionArea({you, areas, piecesInitial, phase, bo
                     yourHouse={you?.house}
                     pieces={pieces}
                     setPieces={setPieces}
-                    selectedPiece={selectedPiece}
-                    setSelectedPiece={setSelectedPiece}
                 />)}
             </div>
             {phaseInformation}
             {you && phase === "Planning - Assign Orders" &&
                 <>
                     <div>
-                        <RemainingPieces house={you.house} type="order" name="raid-special" total={1} pieces={pieces} setSelectedPiece={setSelectedPiece} />
-                        <RemainingPieces house={you.house} type="order" name="raid" total={2} pieces={pieces} setSelectedPiece={setSelectedPiece} />
-                        <RemainingPieces house={you.house} type="order" name="march-special" total={1} pieces={pieces} setSelectedPiece={setSelectedPiece} />
-                        <RemainingPieces house={you.house} type="order" name="march" total={1} pieces={pieces} setSelectedPiece={setSelectedPiece} />
-                        <RemainingPieces house={you.house} type="order" name="march-minus-one" total={1} pieces={pieces} setSelectedPiece={setSelectedPiece} />
-                        <RemainingPieces house={you.house} type="order" name="defense-special" total={1} pieces={pieces} setSelectedPiece={setSelectedPiece} />
-                        <RemainingPieces house={you.house} type="order" name="defense" total={2} pieces={pieces} setSelectedPiece={setSelectedPiece} />
-                        <RemainingPieces house={you.house} type="order" name="support-special" total={1} pieces={pieces} setSelectedPiece={setSelectedPiece} />
-                        <RemainingPieces house={you.house} type="order" name="support" total={2} pieces={pieces} setSelectedPiece={setSelectedPiece} />
-                        <RemainingPieces house={you.house} type="order" name="consolidate-power-special" total={1} pieces={pieces} setSelectedPiece={setSelectedPiece} />
-                        <RemainingPieces house={you.house} type="order" name="consolidate-power" total={2} pieces={pieces} setSelectedPiece={setSelectedPiece} />
+                        {pieces.filter(piece => piece.type === "order" && piece.area === "player").map((piece, index) => <MovablePiece key={index} pieceComponent={<PieceComponent src={`/images/pieces/order/${piece.name}.png`} alt={`${piece.name} ${piece.house}`} />} thisPiece={piece} pieces={pieces} setPieces={setPieces} />)}
                     </div>
                     <DoneForm action={assignOrderTokens.bind(null, pieces.filter(piece => piece.house === you.house && piece.type === "unit").map(piece => piece.area), pieces.filter(piece => piece.house === you.house))} submitButton={<SubmitButton notPendingText="Click here when done assigning your Order tokens" pendingText="Submitting..." />} />
                 </>

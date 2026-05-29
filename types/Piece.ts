@@ -3,4 +3,5 @@ export type Piece = {
     type: string;
     name: string;
     area: string;
+    isSelected: boolean;
 }
