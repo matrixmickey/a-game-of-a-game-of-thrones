@@ -6,7 +6,7 @@ import MovablePiece from "./MovablePiece";
 import { Dispatch, SetStateAction } from "react";
 
 export default function Area({name, top, left, width, height, phase, yourHouse, pieces, setPieces} : {name: string, top: number, left: number, width: number, height: number, phase: string, yourHouse: string | undefined, pieces: Piece[], setPieces: Dispatch<SetStateAction<Piece[]>>}) {
-    function addMovablePiece() {
+    function movePieceHere() {
         setPieces(pieces.map(piece => piece.isSelected ? {...piece, area: name, isSelected: false} : piece));
     }
 
@@ -19,9 +19,9 @@ export default function Area({name, top, left, width, height, phase, yourHouse, 
             onDragOver={ev => ev.preventDefault()}
             onDrop={containsYourUnits ? ev => {
                 ev.preventDefault();
-                addMovablePiece();
+                movePieceHere();
             } : undefined}
-            onClick={containsYourUnits ? addMovablePiece : undefined}
+            onClick={containsYourUnits ? movePieceHere : undefined}
         >
             {pieces.filter(piece => piece.area !== name ? false : piece.house !== yourHouse ? true : phase === "Planning - Assign Orders" ? piece.type !== "order" : true).map((unmovablePiece, index) => {
                 const id = `house-piece-top-${top}-left-${left}-index-${index}`;
