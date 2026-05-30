@@ -3,7 +3,7 @@
 import { useActionState } from "react";
 
 export default function DoneForm({action, submitButton}: {action: (state: {error: string | null}) => Promise<{error: string | null}>, submitButton: React.ReactNode}) {
-    const [state, formAction, isPending] =  useActionState(action, {
+    const [state, formAction] =  useActionState(action, {
         error: null 
     });
 
