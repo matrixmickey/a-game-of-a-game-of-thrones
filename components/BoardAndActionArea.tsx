@@ -76,7 +76,7 @@ export default function BoardAndActionArea({you, areas, piecesInitial, phase, bo
                     >
                         {pieces.filter(piece => piece.type === "order" && piece.area === "player").map((piece, index) => <MovablePiece key={index} pieceComponent={<PieceComponent src={`/images/pieces/order/${piece.name}.png`} alt={`${piece.name} ${piece.house}`} />} thisPiece={piece} pieces={pieces} setPieces={setPieces} />)}
                     </div>
-                    <DoneForm action={assignOrderTokens.bind(null, [...new Set(pieces.filter(piece => piece.house === you.house && piece.type === "unit").map(piece => piece.area))], pieces.filter(piece => piece.house === you.house && piece.type === "order" && piece.area !== "player"))} submitButton={<SubmitButton notPendingText="Click here when done assigning your Order tokens" pendingText="Submitting..." />} />
+                    <DoneForm action={assignOrderTokens.bind(null, you, [...new Set(pieces.filter(piece => piece.house === you.house && piece.type === "unit").map(piece => piece.area))], pieces.filter(piece => piece.house === you.house && piece.type === "order" && piece.area !== "player"))} submitButton={<SubmitButton notPendingText="Click here when done assigning your Order tokens" pendingText="Submitting..." />} />
                 </>
             }
         </>
