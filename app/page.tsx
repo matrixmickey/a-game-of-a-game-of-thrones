@@ -173,17 +173,17 @@ export default async function Home() {
           </div>
         ))}
       </>
-    } phaseInformation=
-    {you &&
+    } phaseInformation={
       <>
       <div>Phase: {game.phase}</div>
       <div>What you need to do right now:</div>
-      {you.isDone ?
+      {you ? (you.isDone ?
         <div>Nothing right now. Waiting on Houses: {players.filter(player => !player.isDone).map((player, index) => <div key={index}>{player.house}</div>)}</div>
       : game.phase === 'Planning - Assign Orders' &&
         <>
         <div>Place exactly one Order token on each area you control that contains at least one of your units (Footman, Knight, Ship, or Siege Engine). The other players will not see these Order tokens until all players have submitted their assginments. These are your Order tokens:</div>
         </>
+      ) : <div>You do not have a House assinged to you, so you are obeserving this game until the next game begins.</div>
       }
       </>
     } />
