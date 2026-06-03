@@ -38,6 +38,16 @@ export default async function assignOrderTokens(you: Player, areasContainingYour
         WHERE house = '${you.house}'
     `);
 
+    const [notDonePlayerRows] = await bigQuery.query('SELECT * FROM `a-game-of-a-game-of-thrones.dataset.players` WHERE isDone = false');
+
+    if (notDonePlayerRows.length === 0) {
+        await bigQuery.query(`
+            UPDATE \`a-game-of-a-game-of-thrones.dataset.games\`
+            SET phase = 'Planning - Use Messenger Raven'
+            WHERE TRUE
+        `);
+    }
+
     revalidatePath('/');
 
     return {error: null};
